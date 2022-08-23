@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Mypage() {
+const Mypage: React.FC = () => {
   return <div>Mypage</div>;
-}
+};
 
 export default Mypage;

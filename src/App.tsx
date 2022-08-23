@@ -4,7 +4,7 @@ import Home from '@pages/Home';
 import Detail from '@pages/Detail';
 import Mypage from '@pages/Mypage';
 
-function App() {
+const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -15,6 +15,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
