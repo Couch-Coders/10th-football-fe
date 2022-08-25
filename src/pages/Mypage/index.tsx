@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Mypage: React.FC = () => {
+const Mypage = (): any => {
   return <div>Mypage</div>;
 };
 
