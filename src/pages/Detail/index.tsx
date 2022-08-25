@@ -1,7 +1,8 @@
 import React from 'react';
+import CommonLayout from '@src/components/commonLayout';
 
 const Detail = () => {
-  return <div>Detail</div>;
+  return <CommonLayout>detail page</CommonLayout>;
 };
 
 export default Detail;
