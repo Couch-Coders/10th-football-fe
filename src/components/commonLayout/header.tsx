@@ -28,11 +28,11 @@ const AbsoluteHeader = styled.div`
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { auth, signInGoogle, signOut } = useFirebaseAuth();
+  const { signInGoogle } = useFirebaseAuth();
 
   // Question
-  const temp = (): void => {
-    const test = signInGoogle();
+  const signIn = async () => {
+    await signInGoogle();
   };
 
   return (
@@ -43,7 +43,7 @@ const Header = () => {
         onCancel={() => setIsOpen(false)}
         header={'Log In'}
       >
-        <button onClick={temp}>버튼</button>
+        <button onClick={signIn}>버튼</button>
       </Modal>
       <AbsoluteHeader>
         <div>

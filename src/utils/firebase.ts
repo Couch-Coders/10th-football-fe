@@ -36,7 +36,7 @@ const useFirebaseAuth = () => {
   useEffect(() => {
     if(auth!=null) {
       auth.onAuthStateChanged(async (firebaseUser) => {
-        if(firebaseUser!==null) {
+        if(firebaseUser) {
           const token = await firebaseUser.getIdToken();
           console.log('token: ', token)
           // axios.get('/temp', {headers: {'Authorization': `Bearer ${token}`}}).then(res => {
