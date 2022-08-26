@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@components/button';
 import Modal from '@components/modal';
+import useFirebaseAuth from '@utils/firebase';
 
 const AbsoluteHeader = styled.div`
   position: relative;
@@ -27,6 +28,12 @@ const AbsoluteHeader = styled.div`
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { auth, signInGoogle, signOut } = useFirebaseAuth();
+
+  // Question
+  const temp = (): void => {
+    const test = signInGoogle();
+  };
 
   return (
     <>
@@ -36,7 +43,7 @@ const Header = () => {
         onCancel={() => setIsOpen(false)}
         header={'Log In'}
       >
-        hello world
+        <button onClick={temp}>버튼</button>
       </Modal>
       <AbsoluteHeader>
         <div>
