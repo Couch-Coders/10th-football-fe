@@ -11,7 +11,8 @@ const Body = styled.div`
 `;
 
 interface Props {
-  children: JSX.Element | string | JSX.Element[];
+  // children: JSX.Element | string | JSX.Element[];
+  children: React.ReactNode;
 }
 
 const CommonLayout = ({ children }: Props) => {

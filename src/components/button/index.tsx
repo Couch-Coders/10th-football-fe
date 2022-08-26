@@ -2,11 +2,16 @@ import React from 'react';
 import { Button as AntdButton } from 'antd';
 
 interface Props {
-  children: JSX.Element | string;
+  children: React.ReactNode;
+  onClick: () => void;
 }
 
-const Button = ({ children }: Props) => {
-  return <AntdButton type="primary">{children}</AntdButton>;
+const Button = ({ children, ...rest }: Props) => {
+  return (
+    <AntdButton type="primary" {...rest}>
+      {children}
+    </AntdButton>
+  );
 };
 
 export default Button;

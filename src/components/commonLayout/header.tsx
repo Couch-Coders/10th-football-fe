@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@components/button';
+import Modal from '@components/modal';
 
 const AbsoluteHeader = styled.div`
   position: relative;
@@ -25,17 +26,29 @@ const AbsoluteHeader = styled.div`
 `;
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <AbsoluteHeader>
-      <div>
+    <>
+      <Modal
+        visible={isOpen}
+        onOk={() => setIsOpen(true)}
+        onCancel={() => setIsOpen(false)}
+        header={'Log In'}
+      >
+        hello world
+      </Modal>
+      <AbsoluteHeader>
         <div>
-          <div>Football</div>
           <div>
-            <Button>로그인</Button>
+            <div>Football</div>
+            <div>
+              <Button onClick={() => setIsOpen(!isOpen)}>로그인</Button>
+            </div>
           </div>
         </div>
-      </div>
-    </AbsoluteHeader>
+      </AbsoluteHeader>
+    </>
   );
 };
 
