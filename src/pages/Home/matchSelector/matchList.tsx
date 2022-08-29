@@ -3,7 +3,6 @@ import { MatchInfoContext } from './MatchInfoProvider';
 
 const MatchList = () => {
   const { matchData } = useContext(MatchInfoContext);
-  console.log(matchData);
   return <div>match list</div>;
 };
 
