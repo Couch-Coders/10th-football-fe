@@ -33,24 +33,24 @@ const useFirebaseAuth = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (auth != null) {
-      auth.onAuthStateChanged(async (firebaseUser) => {
-        if (firebaseUser) {
-          const token = await firebaseUser.getIdToken();
-          console.log('token: ', token);
-          // axios.get('/temp', {headers: {'Authorization': `Bearer ${token}`}}).then(res => {
-          //   // 이미 등록된 사용자일 경우 로그인
-          //   // redux에 등록
-          //   // localstorage에 spring에서 받은 토큰값 등록
-          // }).catch(err => {
-          //   console.log(err)
-          //   // 사용자가 회원가입일 경우 403 으로 받아 회원가입 권유(임시)
-          // })
-        }
-      });
-    }
-  }, [auth]);
+  // useEffect(() => {
+  //   if (auth != null) {
+  //     auth.onAuthStateChanged(async (firebaseUser) => {
+  //       if (firebaseUser) {
+  //         const token = await firebaseUser.getIdToken();
+  //         console.log('token: ', token);
+  //         // axios.get('/temp', {headers: {'Authorization': `Bearer ${token}`}}).then(res => {
+  //         //   // 이미 등록된 사용자일 경우 로그인
+  //         //   // redux에 등록
+  //         //   // localstorage에 spring에서 받은 토큰값 등록
+  //         // }).catch(err => {
+  //         //   console.log(err)
+  //         //   // 사용자가 회원가입일 경우 403 으로 받아 회원가입 권유(임시)
+  //         // })
+  //       }
+  //     });
+  //   }
+  // }, [auth]);
 
   const signInGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
