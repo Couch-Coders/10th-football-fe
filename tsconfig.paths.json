@@ -7,7 +7,9 @@
       "@pages/*": ["src/pages/*"],
       "@apis/*": ["src/apis/*"],
       "@images/*": ["src/images/*"],
-      "@redux/*": ["src/redux/*"]
+      "@redux/*": ["src/redux/*"],
+      "@assets/*": ["src/assets/*"],
+      "@utils/*": ["src/utils/*"]
     }
   }
 }
