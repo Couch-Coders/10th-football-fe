@@ -12,7 +12,7 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json'],
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'prettier', 'preferred-import'],
   rules: {
     semi: 0,
     '@typescript-eslint/explicit-function-return-type': 0,
