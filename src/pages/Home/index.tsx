@@ -4,6 +4,18 @@ import { Carousel } from 'antd';
 import CommonLayout from '@src/components/commonLayout';
 import MatchSelector from './matchSelector';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const MatchContainer = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  > div {
+    margin-top: 20px;
+    &:nth-child(1) {
+      margin-top: 0;
+    }
+  }
+`;
 
 const Home = (): any => {
   // test heroku server by proxy setting in package.json
@@ -30,7 +42,9 @@ const Home = (): any => {
           <div className="item third">3</div>
         </div>
       </Carousel>
-      <MatchSelector />
+      <MatchContainer>
+        <MatchSelector />
+      </MatchContainer>
     </CommonLayout>
   );
 };

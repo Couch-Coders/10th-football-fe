@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Select } from 'antd';
+import { MatchInfoContext } from '@src/pages/home/matchSelector/MatchInfoProvider';
 
 const { Option } = Select;
 const dummy = ['강남구', '마포구', '송파구'];
@@ -21,7 +22,8 @@ const fetch = (value: string, callback: Dispatch<SetStateAction<any[]>>) => {
 
   const getSearchMatchList = () => {
     /* 수정 필요
-    dummy 배열을 통해 includes 매서드로만 구분
+    1. dummy => 백엔드에서 받은 주소로 대체
+    2. dummy 배열을 통해 includes 매서드로만 구분
     */
     const tempArray = dummy
       .filter((addr) => addr.includes(currentValue))
@@ -42,6 +44,7 @@ const SearchInput: React.FC<{
 }> = (props) => {
   const [data, setData] = useState<any[]>([]);
   const [value, setValue] = useState<string>();
+  const { matchData, setMatchData } = useContext(MatchInfoContext);
 
   const handleSearch = (newValue: string) => {
     if (newValue) {
@@ -53,6 +56,10 @@ const SearchInput: React.FC<{
 
   const handleChange = (newValue: string) => {
     setValue(newValue);
+    setMatchData({
+      ...matchData,
+      address: newValue,
+    });
   };
 
   const options = data.map((d) => <Option key={d.value}>{d.text}</Option>);
@@ -76,6 +83,9 @@ const SearchInput: React.FC<{
 };
 
 const SearchSelect = () => (
-  <SearchInput placeholder="주소를 입력해주세요" style={{ width: '200px' }} />
+  <SearchInput
+    placeholder="선호하시는 지역을 입력해주세요."
+    style={{ width: '300px' }}
+  />
 );
 export default SearchSelect;

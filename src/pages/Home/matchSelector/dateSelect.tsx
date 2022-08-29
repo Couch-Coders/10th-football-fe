@@ -10,7 +10,7 @@ const DatePicker = () => {
   const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
     setMatchData({
       ...matchData,
-      date: dateString,
+      time: dateString,
     });
   };
   return (

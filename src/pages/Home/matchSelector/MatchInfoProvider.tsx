@@ -6,7 +6,13 @@ import React, {
 } from 'react';
 
 interface MatchInfoProps {
-  matchData: Object;
+  matchData: {
+    time?: string;
+    gender?: string;
+    deadline?: boolean;
+    num?: number;
+    address?: string;
+  };
   setMatchData: Dispatch<SetStateAction<{}>>;
 }
 export const MatchInfoContext = createContext<MatchInfoProps>({
