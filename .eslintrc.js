@@ -20,4 +20,5 @@ module.exports = {
     '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/strict-boolean-expressions': 0,
   },
+  ignorePatterns: ['.eslintrc.js'],
 };
