@@ -32,7 +32,7 @@ const Header = () => {
 
   // Question
   const signIn = async () => {
-    await signInGoogle();
+    const data = await signInGoogle();
   };
 
   return (
@@ -43,7 +43,7 @@ const Header = () => {
         onCancel={() => setIsOpen(false)}
         header={'Log In'}
       >
-        <button onClick={signIn}>버튼</button>
+        <button onClick={signIn}>로그인</button>
       </Modal>
       <AbsoluteHeader>
         <div>

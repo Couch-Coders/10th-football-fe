@@ -52,10 +52,24 @@ const useFirebaseAuth = () => {
   //   }
   // }, [auth]);
 
-  const signInGoogle = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await auth?.signInWithPopup(provider);
+  // test signin
+  const signInGoogle = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get('http://localhost:3001/user')
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   };
+
+  // const signInGoogle = async () => {
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   await auth?.signInWithPopup(provider);
+  // };
 
   const signOut = async () => {
     return await auth?.signOut();
