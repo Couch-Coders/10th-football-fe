@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '@components/button';
 import Modal from '@components/modal';
 import useFirebaseAuth from '@utils/firebase';
+import { useAppDispatch } from '@src/app/hooks';
 
 const AbsoluteHeader = styled.div`
   position: relative;
@@ -29,6 +30,7 @@ const AbsoluteHeader = styled.div`
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { signInGoogle } = useFirebaseAuth();
+  const dispatch = useAppDispatch();
 
   // Question
   const signIn = async () => {

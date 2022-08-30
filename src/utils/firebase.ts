@@ -39,7 +39,7 @@ const useFirebaseAuth = () => {
   //       if (firebaseUser) {
   //         const token = await firebaseUser.getIdToken();
   //         console.log('token: ', token);
-  //         // axios.get('/temp', {headers: {'Authorization': `Bearer ${token}`}}).then(res => {
+  //         // axios.get('/users/me', {headers: {'Authorization': `Bearer ${token}`}}).then(res => {
   //         //   // 이미 등록된 사용자일 경우 로그인
   //         //   // redux에 등록
   //         //   // localstorage에 spring에서 받은 토큰값 등록

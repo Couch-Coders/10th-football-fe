@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MatchInfoContext } from './MatchInfoProvider';
+import { MatchKeys } from '@pages/home/matchSelector/MatchInfoProvider';
 
 interface MatchInfoProps {
   matchData: {
@@ -28,30 +29,32 @@ const MatchList = () => {
       num,
       address,
     });
-  }, [time, gender, deadline, num, address]);
+  }, [matchData]);
 
-  return (
-    <div>
-      {Object.keys(test).map((key) => {
-        return (
-          <div key={`tempKey_${key}`}>
-            {`${key}: ${JSON.stringify(test[key])}`}
-          </div>
-        );
-      })}
-    </div>
-  );
   // return (
   //   <div>
-  //     {Object.keys(matchData).map((key) => {
+  //     {Object.keys(test).map((key) => {
   //       return (
   //         <div key={`tempKey_${key}`}>
-  //           {`${key}: ${JSON.stringify(matchData[key] || '')}`}
+  //           {`${key}: ${JSON.stringify(test[key])}`}
   //         </div>
   //       );
   //     })}
   //   </div>
   // );
+  return (
+    <div>
+      {Object.keys(matchData)
+        .map((key) => key as unknown as keyof MatchKeys)
+        .map((key) => {
+          return (
+            <div key={`tempKey_${key}`}>
+              {`${key}: ${JSON.stringify(matchData[key])}`}
+            </div>
+          );
+        })}
+    </div>
+  );
 };
 
 export default MatchList;

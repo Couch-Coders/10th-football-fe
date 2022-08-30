@@ -5,14 +5,16 @@ import React, {
   useState,
 } from 'react';
 
+export interface MatchKeys {
+  time?: string;
+  gender?: string;
+  deadline?: boolean;
+  num?: number;
+  address?: string;
+}
+
 interface MatchInfoProps {
-  matchData: {
-    time?: string;
-    gender?: string;
-    deadline?: boolean;
-    num?: number;
-    address?: string;
-  };
+  matchData: MatchKeys;
   setMatchData: Dispatch<SetStateAction<{}>>;
 }
 export const MatchInfoContext = createContext<MatchInfoProps>({
