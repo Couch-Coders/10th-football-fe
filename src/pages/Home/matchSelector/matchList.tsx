@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MatchInfoContext } from './MatchInfoProvider';
-import { MatchKeys } from '@pages/home/matchSelector/MatchInfoProvider';
+import { MatchKeys } from '@src/pages/home/matchSelector/MatchInfoProvider';
 
 interface MatchInfoProps {
   matchData: {
