@@ -1,15 +1,16 @@
-import DatePicker from '@src/components/datePicker';
 import React from 'react';
+import { MatchInfoProvider } from './MatchInfoProvider';
+import DateSelect from './dateSelect';
 import FilterMatch from './filterMatch';
 import MatchList from './matchList';
 
 const MatchSelector = () => {
   return (
-    <>
-      <DatePicker />
+    <MatchInfoProvider>
+      <DateSelect />
       <FilterMatch />
       <MatchList />
-    </>
+    </MatchInfoProvider>
   );
 };
 

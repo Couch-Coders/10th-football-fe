@@ -19,5 +19,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/strict-boolean-expressions': 0,
+    '@typescript-eslint/promise-function-async': 0,
   },
+  ignorePatterns: ['.eslintrc.js'],
 };

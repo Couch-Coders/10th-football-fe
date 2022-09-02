@@ -1,16 +1,22 @@
 .home-caro {
     [class^='item'] {
-        background-color: black;
-        height: 360px;
+        height: 450px;
     }
 
-    .fisrt {
+    .first {
         background-color: black;
+        background-image: url("../assets/images/football1.jpg");
+        background-size: cover;
+        background-position: center;
     }
     .second {
-        background-color: red;
+        background-image: url("../assets/images/football2.jpg");
+        background-size: cover;
+        background-position: bottom;
     }
     .third {
-        background-color: blue;
+        background-image: url("../assets/images/football3.jpg");
+        background-size: cover;
+        background-position: center;
     }
 }

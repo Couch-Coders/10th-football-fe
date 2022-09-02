@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '@components/button';
 import Modal from '@components/modal';
-import useFirebaseAuth from '@utils/firebase';
+import { signInWithGoogle, signOutGoogle } from '@utils/firebase';
+import { useAppDispatch, useAppSelector } from '@src/app/store';
+import type { RootState } from '@src/app/store';
+import { getUserInfoByToken } from '@src/redux/userSlice';
 
 const AbsoluteHeader = styled.div`
   position: relative;
@@ -28,11 +32,28 @@ const AbsoluteHeader = styled.div`
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { signInGoogle } = useFirebaseAuth();
+  // const dispatch = useDispatch();
+  // const { users } = useSelector((state: RootState) => state)
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state);
+
+  useEffect(() => {
+    console.log('users: ', user);
+  }, [user]);
 
   // Question
+  // token type 어떻게 설정해 주어야 하는지
   const signIn = async () => {
-    await signInGoogle();
+    try {
+      const token = await signInWithGoogle();
+      if (!token) {
+        alert('token error!');
+        return;
+      }
+      await dispatch(getUserInfoByToken(token)).unwrap();
+    } catch (err) {
+      console.log('error: ', err);
+    }
   };
 
   return (
@@ -43,7 +64,7 @@ const Header = () => {
         onCancel={() => setIsOpen(false)}
         header={'Log In'}
       >
-        <button onClick={signIn}>버튼</button>
+        <button onClick={signIn}>로그인</button>
       </Modal>
       <AbsoluteHeader>
         <div>
