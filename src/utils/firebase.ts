@@ -1,11 +1,16 @@
 // Import the functions you need from the SDKs you need
-import axios from 'axios';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { useEffect, useState } from 'react';
 // import getAnalytics from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from 'firebase/app';
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
+import { useAppDispatch, useAppSelector } from '@src/app/store';
+import { getUserInfoByToken } from '@src/redux/userSlice';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -19,67 +24,38 @@ const firebaseConfig = {
   measurementId: 'G-3CNYD22ZFL',
 };
 
-const useFirebaseAuth = () => {
-  const [auth, setAuth] = useState<firebase.auth.Auth | null>(null);
+const app = initializeApp(firebaseConfig);
+// Google 제공업체 객체의 인스턴스를 생성합니다.
+const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
 
-  useEffect(() => {
-    // react-hot-loader error
-    // Firebase App Already exist
-    if (firebase.apps.length === 0) {
-      firebase.initializeApp(firebaseConfig);
-      const tempAuth = firebase.auth();
-
-      setAuth(tempAuth);
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   if (auth != null) {
-  //     auth.onAuthStateChanged(async (firebaseUser) => {
-  //       if (firebaseUser) {
-  //         const token = await firebaseUser.getIdToken();
-  //         console.log('token: ', token);
-  //         // axios.get('/users/me', {headers: {'Authorization': `Bearer ${token}`}}).then(res => {
-  //         //   // 이미 등록된 사용자일 경우 로그인
-  //         //   // redux에 등록
-  //         //   // localstorage에 spring에서 받은 토큰값 등록
-  //         // }).catch(err => {
-  //         //   console.log(err)
-  //         //   // 사용자가 회원가입일 경우 403 으로 받아 회원가입 권유(임시)
-  //         // })
-  //       }
-  //     });
-  //   }
-  // }, [auth]);
-
-  // test signin
-  const signInGoogle = () => {
-    return new Promise((resolve, reject) => {
-      axios
-        .get('http://localhost:3001/user')
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  };
-
-  // const signInGoogle = async () => {
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   await auth?.signInWithPopup(provider);
-  // };
-
-  const signOut = async () => {
-    return await auth?.signOut();
-  };
-
-  return {
-    auth,
-    signInGoogle,
-    signOut,
-  };
+export const signInWithGoogle = async () => {
+  // return new Promise<string | undefined>((resolve, reject) => {
+  const res = await signInWithPopup(auth, provider);
+  const credential = GoogleAuthProvider.credentialFromResult(res);
+  const token = credential?.accessToken;
+  return token;
+  // .then((res) => {
+  //   return res;
+  //   console.log(res);
+  //   resolve(token);
+  //   // signin user info if needed
+  //   // const user = result.user;
+  // })
+  // .catch((err) => {
+  //   const errorCode = err.code;
+  //   const errorMessage = err.message;
+  //   // reject(errorMessage);
+  // });
+  // });
 };
 
-export default useFirebaseAuth;
+export const signOutGoogle = () => {
+  signOut(auth)
+    .then((res) => {
+      console.log('signout success');
+    })
+    .catch((err) => {
+      console.log('err signout: ', err);
+    });
+};
