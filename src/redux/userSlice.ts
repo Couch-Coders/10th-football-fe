@@ -45,10 +45,8 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
-      console.log(state.user);
-      console.log(action.payload.user);
       state.user = action.payload.user;
-      console.log('state: ', state.user);
+      // localStorage.setItem('token', action.payload.user);
       // return action.payload;
     });
     builder.addCase(getUserInfoByToken.rejected, (state, action) => {

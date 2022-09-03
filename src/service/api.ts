@@ -1,11 +1,10 @@
-// const APIURL = https://football-matching.herokuapp.com
 import axios from 'axios';
-
-const tempURL = 'http://localhost:3001';
+import { apiUrl } from './config';
+import authHeader from './authHeader';
 
 export const getUserAPI = (token: string) => {
-  // return axios.get(`${tempURL}/users/me`, {
-  return axios.get(`${tempURL}/temp`, {
+  // return axios.get(`${apiUrl}/users/me`, {
+  return axios.get(`${apiUrl}/temp`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

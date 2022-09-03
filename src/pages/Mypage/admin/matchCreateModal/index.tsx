@@ -24,11 +24,8 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
     content: '',
     matchNum: 0,
   });
-  console.log(matchInfo.startAt);
-  console.log(moment().toLocaleString());
 
   const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
     setMatchInfo({
       ...matchInfo,
       startAt: dateString,
