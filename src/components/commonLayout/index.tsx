@@ -8,6 +8,9 @@ const Body = styled.div`
   margin: 0 auto;
   min-height: 1000px;
   margin-top: 20px;
+  > section {
+    margin-top: 40px;
+  }
 `;
 
 interface Props {

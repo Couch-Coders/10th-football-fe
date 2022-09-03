@@ -35,13 +35,6 @@ const getUserInfoByToken = createAsyncThunk(
   // 3 param: condition을 통해 비동기 함수 실행 전 실행을 취소 할 수 있다.
 );
 
-// Question
-// user내의 키값들을 모두 쓰지 않고 {} 만 정의하고 싶을 때
-/* initialState = {
-  user: {}
-}
-
-*/
 const initialState: User = {
   user: null,
 };
