@@ -8,6 +8,9 @@ const FormContainer = styled.form`
     :not(:nth-child(1)) {
       margin-top: 20px;
     }
+    :nth-last-child(2) {
+      margin-bottom: 40px;
+    }
   }
 `;
 

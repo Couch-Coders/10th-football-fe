@@ -20,13 +20,13 @@ const AdminMyPage = () => {
         visible={isMatchModalOpen}
         onOk={() => setIsMatchModalOpen(true)}
         onCancel={() => setIsMatchModalOpen(false)}
-        header="경기장 생성"
+        header="경기 생성"
       />
       <StadiumCreateModal
         visible={isStadiumModalOpen}
         onOk={() => setIsStadiumModalOpen(true)}
         onCancel={() => setIsStadiumModalOpen(false)}
-        header="경기 생성"
+        header="경기장 생성"
       />
       <Container>
         <Button onClick={() => setIsStadiumModalOpen(true)} color={'yellow'}>
