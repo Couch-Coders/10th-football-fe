@@ -1,59 +1,57 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MatchInfoContext } from './MatchInfoProvider';
-import { MatchKeys } from '@src/pages/home/matchSelector/MatchInfoProvider';
+import { List } from 'antd';
+import { getMatches } from '@service/matchApi';
+import { MATCH_NUM_TO_STRING, GENDER_TO_KOR } from '@utils/parse';
 
-interface MatchInfoProps {
-  matchData: {
-    time?: string;
-    gender?: string;
-    deadline?: boolean;
-    num?: number;
-    address?: string;
+interface MatchListProps {
+  id: number;
+  startAt: string;
+  gender: 'MALE' | 'FEMALE' | 'ALL';
+  stadium: {
+    address: string;
+    name: string;
   };
-}
-
-interface ObjType {
-  [key: string]: string | undefined | boolean | number;
+  matchNum: 10 | 12 | 18;
+  status: 'OPEN' | 'CLOSE';
 }
 
 const MatchList = () => {
   const { matchData } = useContext(MatchInfoContext);
-  const { time, gender, deadline, num, address } = matchData;
-  const [test, setTest] = useState<ObjType>({});
+  const { matchDay, gender, status, personnel, stadiumName } = matchData;
+  const [matchList, setMatchList] = useState<any[]>();
   useEffect(() => {
-    setTest({
-      ...test,
-      time,
-      gender,
-      deadline,
-      num,
-      address,
-    });
-  }, [matchData]);
+    const queryString = Object.entries(matchData)
+      .filter((d) => d[1])
+      .map((d) => d.join('='))
+      .join('&');
+    void getAllMatches(queryString);
+  }, [matchDay, gender, status, personnel, stadiumName]);
 
-  // return (
-  //   <div>
-  //     {Object.keys(test).map((key) => {
-  //       return (
-  //         <div key={`tempKey_${key}`}>
-  //           {`${key}: ${JSON.stringify(test[key])}`}
-  //         </div>
-  //       );
-  //     })}
-  //   </div>
-  // );
+  const getAllMatches = async (queryString: string) => {
+    const res = await getMatches(queryString);
+    setMatchList(res);
+  };
+
   return (
-    <div>
-      {Object.keys(matchData)
-        .map((key) => key as unknown as keyof MatchKeys)
-        .map((key) => {
-          return (
-            <div key={`tempKey_${key}`}>
-              {`${key}: ${JSON.stringify(matchData[key])}`}
-            </div>
-          );
-        })}
-    </div>
+    <List
+      size="large"
+      bordered
+      dataSource={matchList}
+      renderItem={(item: MatchListProps) => (
+        <List.Item
+          id={item.id.toString()}
+          onClick={() => {}}
+          style={{ cursor: 'pointer' }}
+        >
+          <span>{item.startAt.split('T')[1].slice(0, 5)}</span>
+          <span>{item.stadium.address + ' ' + item.stadium.name}</span>
+          <span>{GENDER_TO_KOR[item.gender]}</span>
+          <span>{MATCH_NUM_TO_STRING[item.matchNum]}</span>
+          <span>{item.status}</span>
+        </List.Item>
+      )}
+    />
   );
 };
 

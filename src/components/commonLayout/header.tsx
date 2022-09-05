@@ -35,14 +35,17 @@ const Header = () => {
   // const dispatch = useDispatch();
   // const { users } = useSelector((state: RootState) => state)
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state);
 
+  const { user } = useAppSelector((state) => state.user);
+
+  // Question
+  // Home => Mypage 로 갔을 때 사실상user 정보는 변함이 없다
+  // 하지만 useEffect에서는 여전히 console.log가 실행된다
+  // 막을 최적화 방법
   useEffect(() => {
     console.log('users: ', user);
   }, [user]);
 
-  // Question
-  // token type 어떻게 설정해 주어야 하는지
   const signIn = async () => {
     try {
       const token = await signInWithGoogle();

@@ -30,24 +30,10 @@ const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
 export const signInWithGoogle = async () => {
-  // return new Promise<string | undefined>((resolve, reject) => {
   const res = await signInWithPopup(auth, provider);
   const credential = GoogleAuthProvider.credentialFromResult(res);
   const token = credential?.accessToken;
   return token;
-  // .then((res) => {
-  //   return res;
-  //   console.log(res);
-  //   resolve(token);
-  //   // signin user info if needed
-  //   // const user = result.user;
-  // })
-  // .catch((err) => {
-  //   const errorCode = err.code;
-  //   const errorMessage = err.message;
-  //   // reject(errorMessage);
-  // });
-  // });
 };
 
 export const signOutGoogle = () => {

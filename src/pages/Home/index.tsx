@@ -24,9 +24,9 @@ const Home = (): any => {
   // test heroku server by proxy setting in package.json
   // useEffect(() => {
   //   axios
-  //     .get('/front')
+  //     .get('https://football-matching.herokuapp.com/front ')
   //     .then((res) => {
-  //       console.log(res.data);
+  //       console.log(res);
   //     })
   //     .catch((err) => {
   //       console.log(err);
