@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import SearchInput from '@components/searchSelect';
 import Tag from '@src/components/tag';
@@ -25,17 +25,26 @@ const SearchContainer = styled.div`
 
 const FilterMatch = () => {
   const [selectInfo, setSelectInfo] = useState({
-    deadline: 0,
-    gender: 0,
-    num: 0,
+    status: '',
+    gender: '',
+    personnel: 0,
   });
   const { matchData, setMatchData } = useContext(MatchInfoContext);
-  // !!!!!!!!!!!!!!!!!!
-  // optionObj..?
-  // optionObj = {key: string, value: number, children: string}
-  const onChange = (value: number, optionObj: any) => {
-    // selectInfo State 불필요해 보임. matchData의 내부 값들과 같기 때문에.
-    // selectInfo을 matchData로 대체 필요
+  const { matchDay } = matchData;
+
+  // Question
+  // dateSelect 에서 ContextAPI의 matchData의 matchDay을 재설정
+  // 그와 동시에 이 useEffect도 발생하여 matchDay가 덮어씌어지는 현상
+  useEffect(() => {
+    if (matchDay) {
+      setMatchData({
+        ...matchData,
+        ...selectInfo,
+      });
+    }
+  }, [matchDay]);
+
+  const onChange = (value: number | string, optionObj: any) => {
     const key = optionObj?.key.split('Option')[0];
     setSelectInfo({
       ...selectInfo,
@@ -50,36 +59,42 @@ const FilterMatch = () => {
     <Container>
       <SearchContainer>
         <SearchInput />
-        {/* <div>
-          <Tag>Tag Example1</Tag>
-          <Tag>Tag Example2</Tag>
-          <Tag>Tag Example3</Tag>
-        </div> */}
       </SearchContainer>
-      <Select onChange={onChange} defaultValue={0}>
+      <Select onChange={onChange} placeholder="마감여부">
         {['마감 가리기', '마감 보이기'].map((str, index) => {
           return (
-            <Option key={`deadlineOption${index}`} value={index}>
+            <Option
+              key={`statusOption${index}`}
+              value={index === 0 ? 'CLOSE' : 'OPEN'}
+            >
               {str}
             </Option>
           );
         })}
       </Select>
 
-      <Select onChange={onChange} defaultValue={0}>
-        {['남', '여', '남/여'].map((str, index) => {
+      <Select onChange={onChange} placeholder="성별">
+        {[
+          { label: '남', value: 'MALE' },
+          { label: '여', value: 'FEMALE' },
+          { label: '남/여', value: 'ALL' },
+        ].map((str, index) => {
           return (
-            <Option key={`genderOption${index}`} value={index}>
-              {str}
+            <Option key={`genderOption${index}`} value={str.value}>
+              {str.label}
             </Option>
           );
         })}
       </Select>
-      <Select onChange={onChange} defaultValue={0}>
-        {['5vs5', '6vs6', '9vs9'].map((str, index) => {
+      <Select onChange={onChange} placeholder="인원">
+        {[
+          { label: '5vs5', value: 10 },
+          { label: '6vs6', value: 12 },
+          { label: '9vs9', value: 18 },
+        ].map((str, index) => {
           return (
-            <Option key={`numOption${index}`} value={index}>
-              {str}
+            <Option key={`personnelOption${index}`} value={str.value}>
+              {str.label}
             </Option>
           );
         })}

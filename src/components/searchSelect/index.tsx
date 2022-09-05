@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Select } from 'antd';
 import { MatchInfoContext } from '@src/pages/home/matchSelector/MatchInfoProvider';
+import { getStadiumList } from '@src/service/stadiumApi';
 
 const { Option } = Select;
 const dummy = ['강남구', '마포구', '송파구'];
@@ -25,10 +26,24 @@ const fetch = (value: string, callback: Dispatch<SetStateAction<any[]>>) => {
     1. dummy => 백엔드에서 받은 주소로 대체
     2. dummy 배열을 통해 includes 매서드로만 구분
     */
-    const tempArray = dummy
-      .filter((addr) => addr.includes(currentValue))
-      .map((addr) => ({ value: addr, text: addr }));
-    callback(tempArray);
+    getStadiumList(value)
+      .then((res) => {
+        const stadiumList = res.data.map(
+          (obj: { id: number; address: string; name: string }) => ({
+            value: obj.name,
+            text: `${obj.address}(${obj.name})`,
+          }),
+        );
+        callback(stadiumList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // const tempArray = dummy
+    //   .filter((addr) => addr.includes(currentValue))
+    //   .map((addr) => ({ value: addr, text: addr }));
+    // callback(tempArray);
   };
 
   timeout = setTimeout(getSearchMatchList, 300);
@@ -58,7 +73,7 @@ const SearchInput: React.FC<{
     setValue(newValue);
     setMatchData({
       ...matchData,
-      address: newValue,
+      stadiumName: newValue,
     });
   };
 
@@ -84,7 +99,7 @@ const SearchInput: React.FC<{
 
 const SearchSelect = () => (
   <SearchInput
-    placeholder="선호하시는 지역을 입력해주세요."
+    placeholder="경기장 이름을 입력해주세요."
     style={{ width: '300px' }}
   />
 );

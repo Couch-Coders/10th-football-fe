@@ -6,11 +6,11 @@ import React, {
 } from 'react';
 
 export interface MatchKeys {
-  time?: string;
+  matchDay?: string;
   gender?: string;
-  deadline?: boolean;
-  num?: number;
-  address?: string;
+  status?: string;
+  personnel?: number;
+  stadiumName?: string;
 }
 
 interface MatchInfoProps {
