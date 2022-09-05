@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MatchInfoContext } from './MatchInfoProvider';
 import { List } from 'antd';
 import { getMatches } from '@service/matchApi';
-import { AxiosError } from 'axios';
 import { MATCH_NUM_TO_STRING, GENDER_TO_KOR } from '@utils/parse';
 
 interface MatchListProps {
