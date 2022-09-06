@@ -1,5 +1,7 @@
-import { getUserAPI } from '@service/api';
+import { getUserAPI, createUser } from '@service/userApi';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
+import type { UserInfo } from '@service/userApi';
 
 interface UserKeys {
   uid: number;
@@ -20,19 +22,18 @@ const getUserInfoByToken = createAsyncThunk(
   'users/getByToken',
   // payload creator callback
   async (token: string) => {
-    // token = undefined 일때 방어로직 삽입
-    if (token) {
-      try {
-        const response = await getUserAPI(token);
-        console.log('response: ', response);
-        return response.data;
-      } catch (err) {
-        console.log('error handling in getUserInfo');
-        return 'error handling in getUserInfo';
-      }
-    }
+    const response = await getUserAPI(token);
+    return response.data;
   },
   // 3 param: condition을 통해 비동기 함수 실행 전 실행을 취소 할 수 있다.
+);
+
+const createUserBySelf = createAsyncThunk(
+  'users/createUser',
+  async (userInfo: UserInfo) => {
+    const response = await createUser(userInfo);
+    return response.data;
+  },
 );
 
 const initialState: User = {
@@ -46,11 +47,15 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      // localStorage.setItem('token', action.payload.user);
-      // return action.payload;
     });
     builder.addCase(getUserInfoByToken.rejected, (state, action) => {
       console.log('error while operating getUserInfoByToken: ', action);
+    });
+    builder.addCase(createUserBySelf.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
+    builder.addCase(createUserBySelf.rejected, (state, action) => {
+      console.error('error while operating createUserBySelf:');
     });
   },
 });
@@ -72,6 +77,6 @@ const userSlice = createSlice({
 //   });
 
 const { actions, reducer } = userSlice;
-export { getUserInfoByToken };
+export { getUserInfoByToken, createUserBySelf };
 
 export default reducer;

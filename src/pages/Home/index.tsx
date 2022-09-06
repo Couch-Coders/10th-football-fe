@@ -20,18 +20,7 @@ const MatchContainer = styled.div`
   }
 `;
 
-const Home = (): any => {
-  // test heroku server by proxy setting in package.json
-  // useEffect(() => {
-  //   axios
-  //     .get('https://football-matching.herokuapp.com/front ')
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+const Home = () => {
   return (
     <CommonLayout>
       <Carousel className="home-caro">
