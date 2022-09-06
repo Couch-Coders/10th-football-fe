@@ -56,6 +56,8 @@ const userSlice = createSlice({
     });
     builder.addCase(createUserBySelf.rejected, (state, action) => {
       console.error('error while operating createUserBySelf:');
+      console.log('delete token');
+      localStorage.removeItem('token');
     });
   },
 });
