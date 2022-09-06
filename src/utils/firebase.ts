@@ -31,9 +31,9 @@ const auth = getAuth(app);
 
 export const signInWithGoogle = async () => {
   const res = await signInWithPopup(auth, provider);
-  const credential = GoogleAuthProvider.credentialFromResult(res);
-  const token = credential?.idToken;
-  return token;
+  // const credential = GoogleAuthProvider.credentialFromResult(res);
+  // const token = credential?.idToken;
+  return await res.user.getIdToken();
 };
 
 export const signOutGoogle = () => {
