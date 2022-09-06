@@ -11,12 +11,12 @@ const userAxios = axios.create({ baseURL: `${apiUrl}/users` });
 userAxios.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.log('error!!!!!!!: ', error);
     if (
       error.response &&
-      error.response.status === 401 &&
-      error.request &&
-      error.request.responseURL ===
-        'https://football-matching.herokuapp.com/users/me'
+      error.response.status === 401
+      // error.request.responseURL ===
+      //   'https://football-matching.herokuapp.com/users/me'
     ) {
       console.log('need signup');
       // eslint-disable-next-line prefer-promise-reject-errors
@@ -38,5 +38,8 @@ export const getUserAPI = (token: string) => {
 };
 
 export const createUser = (userInfo: UserInfo) => {
-  return userAxios.post(``, userInfo, authHeader());
+  return userAxios.post(``, userInfo, {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
 };
