@@ -20,6 +20,10 @@ const MatchList = () => {
   const { matchData } = useContext(MatchInfoContext);
   const { matchDay, gender, status, personnel, stadiumName } = matchData;
   const [matchList, setMatchList] = useState<any[]>();
+
+  // Question
+  // Context API을 사용하기 때문에 매번 setstate가 발생할때 마다 서버에 요청을 보냄
+  // 한번만 보내는 방법이 있을까?
   useEffect(() => {
     const queryString = Object.entries(matchData)
       .filter((d) => d[1])

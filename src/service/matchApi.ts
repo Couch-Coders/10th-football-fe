@@ -27,7 +27,7 @@ export const createMatch = async (matchInfo: matchInfo) => {
 };
 
 export const getMatches = async (queryString: string): Promise<any[]> => {
-  const res = await wrapper(axios.get(`${apiUrl}/matches?${queryString}`));
+  const res = await wrapper(matchAxios.get(`/matches?${queryString}`));
   if (res.data) {
     return res.data.content;
   } else {
@@ -35,18 +35,11 @@ export const getMatches = async (queryString: string): Promise<any[]> => {
   }
 };
 
-// const Wrapper = async (myFunc: () => Promise<AxiosResponse<any, any>>) => {
-//   try {
-//     const res = await myFunc();
-//     return res.data;
-//   } catch (error) {
-//     if (error instanceof AxiosError) {
-//       return error.message;
-//     } else {
-//       return error;
-//     }
-//   }
-// };
+export const getMatch = async (matchId: number) => {
+  const res = await wrapper(matchAxios.get(`${matchId}`));
+  if (res) return res.data;
+  else return null;
+};
 
 const wrapper = async (
   myFunc: Promise<AxiosResponse<any, any>>,

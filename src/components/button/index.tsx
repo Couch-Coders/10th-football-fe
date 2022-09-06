@@ -6,6 +6,7 @@ interface Props {
   children: React.ReactNode;
   onClick: () => void;
   color?: string;
+  style?: React.CSSProperties;
 }
 
 const Button = ({ children, color, ...rest }: Props) => {
