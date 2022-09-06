@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
+import type { RootState } from '@app/store';
+import { useAppDispatch, useAppSelector } from '@app/store';
 import Button from '@components/button';
 import Modal from '@components/modal';
+import { getUserInfoByToken } from '@redux/userSlice';
 import { signInWithGoogle, signOutGoogle } from '@utils/firebase';
-import { useAppDispatch, useAppSelector } from '@src/app/store';
-import type { RootState } from '@src/app/store';
-import { getUserInfoByToken } from '@src/redux/userSlice';
 
 const AbsoluteHeader = styled.div`
   position: relative;

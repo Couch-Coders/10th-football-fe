@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
-import '@assets/home.scss';
 import { Carousel } from 'antd';
-import CommonLayout from '@src/components/commonLayout';
-import MatchSelector from './matchSelector';
 import axios from 'axios';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+
 import Img1 from '@assets/images/football1.jpg';
 import Img2 from '@assets/images/football2.jpg';
 import Img3 from '@assets/images/football3.jpg';
+import CommonLayout from '@components/commonLayout';
+
+import MatchSelector from './matchSelector';
+
+import '@assets/home.scss';
 
 const MatchContainer = styled.div`
   width: 100%;

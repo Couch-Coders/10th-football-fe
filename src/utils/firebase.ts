@@ -9,8 +9,9 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { useAppDispatch, useAppSelector } from '@src/app/store';
-import { getUserInfoByToken } from '@src/redux/userSlice';
+
+import { useAppDispatch, useAppSelector } from '@app/store';
+import { getUserInfoByToken } from '@redux/userSlice';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional

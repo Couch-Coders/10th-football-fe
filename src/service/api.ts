@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { apiUrl } from './config';
+
 import authHeader from './authHeader';
+import { apiUrl } from './config';
 
 export const getUserAPI = (token: string) => {
   // return axios.get(`${apiUrl}/users/me`, {

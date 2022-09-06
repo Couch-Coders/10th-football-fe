@@ -1,5 +1,6 @@
-import { getUserAPI } from '@service/api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import { getUserAPI } from '@service/api';
 
 interface UserKeys {
   uid: number;
