@@ -1,15 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 
 const Container = styled.div`
   width: 100%;
   :not(:nth-child(1)) {
     margin-top: 20px;
   }
-  > section:nth-child(1) {
-    display: flex;
-    > span:not(:nth-child(1)) {
-      margin-left: 40px;
+  > section {
+    :not(:nth-child(1)) {
+      margin-top: 30px;
+    }
+    &.head {
+      display: flex;
+      > span:not(:nth-child(1)) {
+        margin-left: 40px;
+      }
+    }
+    &.match-info {
+      display: flex;
+      flex-wrap: wrap;
+      > div {
+        width: 48%;
+        flex-wrap: wrap;
+        padding-right: 10px;
+        padding-bottom: 10px;
+      }
     }
   }
 `;
@@ -66,10 +82,15 @@ const dummy = {
 const RightSideDetail = () => {
   return (
     <Container>
-      <section>
-        <span>like 99</span>
-        <span>남녀 모두</span>
-        <span>6vs6</span>
+      <section className="head">
+        <span>like {dummy.matchStadium.likeCount}</span>
+        {/* <span>{GENDER_TO_KOR[dummy.gender]}</span> */}
+        <span>{dummy.gender}</span>
+        <span>{dummy.matchNum}</span>
+      </section>
+      <section className="match-info">
+        <div>{dummy.matchStadium.parking ? '주차가능' : '주차불가능'}</div>
+        <div>{dummy.matchStadium.rental ? '대여가능' : '대여불가능'}</div>
       </section>
     </Container>
   );
