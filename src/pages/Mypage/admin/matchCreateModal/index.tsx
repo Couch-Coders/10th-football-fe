@@ -58,18 +58,8 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
       console.log('입력되지 않은 필드가 있습니다.');
       return;
     }
-    // Question 매번 try catch을 내에 api 함수를 넣고 해야 한다.
-    // 하나의 컴포넌트나 훅으로 사용하는 예시?
-    // + 에러헨들링
-    // error: unknown | undefined이므로 error.message을 입력하지 못함
-    try {
-      const result = await createMatch(matchInfo);
-      console.log('match save success: ', result);
-    } catch (error) {
-      console.log('create match error: ', error);
-    }
-    // const res = await request((matchInfo) => createMatch(matchInfo));
-    // console.log('res: ', res);
+
+    await createMatch(matchInfo);
   };
 
   return (

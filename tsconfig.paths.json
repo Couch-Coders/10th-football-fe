@@ -9,7 +9,8 @@
       "@redux/*": ["src/redux/*"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
-      "@service/*": ["src/service/*"]
+      "@service/*": ["src/service/*"],
+      "@custype/*": ["src/types/*"]
     }
   }
 }
