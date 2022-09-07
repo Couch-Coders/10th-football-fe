@@ -1,4 +1,4 @@
-import { Input, Select } from 'antd';
+import { Avatar, Input, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -161,7 +161,16 @@ const Header = () => {
             <div onClick={() => navigate('/')}>Football</div>
             <div>
               {isLoggedIn ? (
-                <Button onClick={signOut}>로그아웃</Button>
+                <div className="flex">
+                  <Avatar
+                    src="https://joeschmoe.io/api/v1/random"
+                    alt="user"
+                    className="mr-1"
+                    style={{ backgroundColor: 'white', cursor: 'pointer' }}
+                    onClick={() => navigate('/mypage')}
+                  />
+                  <Button onClick={signOut}>로그아웃</Button>
+                </div>
               ) : (
                 <Button onClick={() => setIsOpen(!isOpen)}>로그인</Button>
               )}

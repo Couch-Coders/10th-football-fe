@@ -10,7 +10,7 @@ const Comments = ({ username, content }: CommnetsProps) => {
   return (
     <Comment
       author={username}
-      avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Test" />}
+      avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="user" />}
       content={content}
     ></Comment>
   );
