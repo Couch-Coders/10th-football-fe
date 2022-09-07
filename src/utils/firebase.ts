@@ -10,9 +10,6 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import { useAppDispatch, useAppSelector } from '@app/store';
-import { getUserInfoByToken } from '@redux/userSlice';
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -37,12 +34,4 @@ export const signInWithGoogle = async () => {
   return await res.user.getIdToken();
 };
 
-export const signOutGoogle = () => {
-  signOut(auth)
-    .then((res) => {
-      console.log('signout success');
-    })
-    .catch((err) => {
-      console.log('err signout: ', err);
-    });
-};
+export const signOutGoogle = async () => await signOut(auth);

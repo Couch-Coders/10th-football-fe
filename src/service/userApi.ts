@@ -12,21 +12,15 @@ const userAxios = axios.create({ baseURL: `${apiUrl}/users` });
 userAxios.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log('error!!!!!!!: ', error);
     if (
       error.response &&
-      error.response.status === 401
-      // error.request.responseURL ===
-      //   'https://football-matching.herokuapp.com/users/me'
+      error.response.status === 401 &&
+      error.response.data === '해당 회원이 존재하지 않습니다'
     ) {
-      console.log('need signup');
       // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject('NEW_USER');
+      // return Promise.reject('NEW_USER');
     }
-    // if (error.response && error.response.status === 404) {
-    //   // eslint-disable-next-line prefer-promise-reject-errors
-    //   return Promise.reject('NEW_USER');
-    // }
     return Promise.reject(error);
   },
 );

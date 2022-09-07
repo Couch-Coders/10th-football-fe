@@ -10,15 +10,16 @@ import GButton from '@assets/images/GButton.jpg';
 import Button from '@components/button';
 import InputForm, { Section } from '@components/inputForm';
 import Modal from '@components/modal';
-import { getUserInfoByToken, createUserBySelf } from '@redux/userSlice';
+import {
+  getUserInfoByToken,
+  createUserBySelf,
+  signOut as signOutAction,
+} from '@redux/userSlice';
 import type { UserInfo } from '@service/userApi';
 import { signInWithGoogle, signOutGoogle } from '@utils/firebase';
+import { deleteTokenInLocalStorage } from '@utils/user';
 
 const { Option } = Select;
-
-interface NewUserError {
-  message: string;
-}
 
 const AbsoluteHeader = styled.div`
   position: relative;
@@ -49,16 +50,16 @@ const Header = () => {
     gender: '',
     phone: '',
   });
-  // const dispatch = useDispatch();
-  // const { users } = useSelector((state: RootState) => state)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { user } = useAppSelector((state) => state.user);
-
+  const { isAuthenticaton } = useAppSelector((state) => state.user);
   useEffect(() => {
     // console.log('users: ', user);
-  }, [user]);
+    if (isAuthenticaton) setIsLoggedIn(true);
+    else setIsLoggedIn(false);
+  }, [isAuthenticaton]);
 
   const signIn = async () => {
     try {
@@ -70,17 +71,14 @@ const Header = () => {
       }
       localStorage.setItem('token', token);
       await dispatch(getUserInfoByToken(token)).unwrap();
-    } catch (error) {
-      // Question!!
-      // Error handling 방법..
-      // axios.interceptor에서 사용자가 정의한 오류를 보냈을 경우.
-      if (error instanceof Error) {
-        console.log(error.message);
+    } catch (error: any) {
+      // Question
+      // 이게 맞는 error handling 방식?
+      // custom error message을 보냈을 경우 어떻게 해야 하는지
+      if (error.message === 'NEW_USER') {
+        setSignupOpen(true);
       } else {
-        const err = error as NewUserError;
-        if (err.message === 'NEW_USER') {
-          setSignupOpen(true);
-        }
+        console.error(error);
       }
     }
   };
@@ -88,6 +86,12 @@ const Header = () => {
   const signUp = async () => {
     await dispatch(createUserBySelf(signupInfo)).unwrap();
     setSignupOpen(false);
+  };
+
+  const signOut = async () => {
+    await signOutGoogle();
+    deleteTokenInLocalStorage();
+    dispatch(signOutAction());
   };
 
   return (
@@ -156,7 +160,11 @@ const Header = () => {
           <div>
             <div onClick={() => navigate('/')}>Football</div>
             <div>
-              <Button onClick={() => setIsOpen(!isOpen)}>로그인</Button>
+              {isLoggedIn ? (
+                <Button onClick={signOut}>로그아웃</Button>
+              ) : (
+                <Button onClick={() => setIsOpen(!isOpen)}>로그인</Button>
+              )}
             </div>
           </div>
         </div>
