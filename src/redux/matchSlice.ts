@@ -7,11 +7,15 @@ interface MatchInfoProps {
   stadium: {
     name: string;
     address: string;
+    likeCount: number;
   };
   matchApplicants: Array<{
     uid: number | string;
     username: string;
   }>;
+  rest: number;
+  gender: string;
+  matchNum: number;
 }
 
 const initialState: MatchInfoProps = {
@@ -19,8 +23,12 @@ const initialState: MatchInfoProps = {
   stadium: {
     name: '',
     address: '',
+    likeCount: 0,
   },
   matchApplicants: [{ uid: '', username: '' }],
+  rest: 0,
+  matchNum: 0,
+  gender: 'MALE',
 };
 
 const matchSlice = createSlice({
@@ -33,4 +41,5 @@ const matchSlice = createSlice({
 });
 
 export const { getMatchInfo } = matchSlice.actions;
+export type { MatchInfoProps };
 export default matchSlice.reducer;

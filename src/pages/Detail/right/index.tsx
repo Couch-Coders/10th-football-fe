@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { useAppSelector } from '@app/store';
+import type { MatchInfoProps } from '@redux/matchSlice';
 import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 
 const Container = styled.div`
@@ -81,13 +83,14 @@ const dummy = {
 };
 
 const RightSideDetail = () => {
+  const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
   return (
     <Container>
       <section className="head">
-        <span>like {dummy.matchStadium.likeCount}</span>
+        <span>like {matchInfo.stadium.likeCount}</span>
         {/* <span>{GENDER_TO_KOR[dummy.gender]}</span> */}
-        <span>{dummy.gender}</span>
-        <span>{dummy.matchNum}</span>
+        <span>{matchInfo.gender}</span>
+        <span>{matchInfo.matchNum}</span>
       </section>
       <section className="match-info">
         <div>{dummy.matchStadium.parking ? '주차가능' : '주차불가능'}</div>

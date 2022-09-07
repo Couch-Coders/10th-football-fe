@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useAppSelector } from '@app/store';
 import Button from '@components/button';
 import Card from '@components/card/simpleCard';
+import type { MatchInfoProps } from '@redux/matchSlice';
 
 const Container = styled.div`
   > *:nth-child(2) {
@@ -92,39 +93,27 @@ const dummy = {
     },
   ],
 };
-interface MatchInfoProps {
-  startAt: string;
-  matchStadium: {
-    name: string;
-    address: string;
-  };
-  matchApplicants: Array<{
-    uid: number | string;
-    username: string;
-  }>;
-}
 
 const LeftSideDetail = () => {
-  const matchInfo = useAppSelector((state) => state.match);
-  console.log(matchInfo);
+  const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
   return (
     <Container>
       <Card>
         <MatchRequestCard>
-          <div>{dummy.startAt.split(' ')[0]}</div>
-          <div>{dummy.matchStadium.name}</div>
-          <div>{dummy.matchStadium.address}</div>
-          <Button onClick={() => {}}>
+          <div>{matchInfo.startAt.split(' ')[0]}</div>
+          <div>{matchInfo.stadium.name}</div>
+          <div>{matchInfo.stadium.address}</div>
+          <Button onClick={() => {}} disabled={matchInfo.rest === 0}>
             신청하기
             <br />
-            <span>마감까지 4자리 남았어요!</span>
+            <span>마감까지 {matchInfo.rest}자리 남았어요!</span>
           </Button>
         </MatchRequestCard>
       </Card>
       {/* Admin일 경우에만 해당 컴포넌트가 보여야 한다. */}
       <Card>
         <ApplicantsContainer>
-          {dummy.matchApplicants.map((applicant) => {
+          {matchInfo.matchApplicants.map((applicant) => {
             return (
               <Tag key={`badge_${applicant.uid}`}>
                 {`${applicant.username}(${applicant.uid})`}
