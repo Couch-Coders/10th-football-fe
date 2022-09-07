@@ -36,7 +36,6 @@ export const createMatch = async (matchInfo: matchInfo) => {
 };
 
 export const getMatches = async (queryString: MatchKeys): Promise<any[]> => {
-  console.log(queryString);
   const res = await wrapper(
     matchAxios.get(``, {
       params: queryString,

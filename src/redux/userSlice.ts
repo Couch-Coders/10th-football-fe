@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getUserAPI, createUser } from '@service/userApi';
 import type { UserInfo } from '@service/userApi';
@@ -12,7 +12,8 @@ interface UserKeys {
 }
 
 interface User {
-  user: UserKeys | null;
+  profile: UserKeys | null;
+  isAuthenticaton: boolean;
 }
 
 const getUserInfoByToken = createAsyncThunk(
@@ -37,48 +38,40 @@ const createUserBySelf = createAsyncThunk(
 );
 
 const initialState: User = {
-  user: null,
+  profile: null,
+  isAuthenticaton: false,
 };
 
 const userSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    signOut: (state) => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
-      state.user = action.payload.user;
+      state.profile = action.payload;
+      state.isAuthenticaton = true;
     });
     builder.addCase(getUserInfoByToken.rejected, (state, action) => {
+      if (action?.error?.message === 'NEW_USER') {
+        return;
+      }
       console.log('error while operating getUserInfoByToken: ', action);
     });
-    builder.addCase(createUserBySelf.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
+    builder.addCase(
+      createUserBySelf.fulfilled,
+      (state, action) => action.payload,
+    );
     builder.addCase(createUserBySelf.rejected, (state, action) => {
       console.error('error while operating createUserBySelf:');
-      console.log('delete token');
       localStorage.removeItem('token');
     });
   },
 });
 
-// reducer example
-// const userSlice = createSlice({
-//     name: 'users',
-//     initialState,
-//     reducers: {
-//       getUser(state, action: PayloadAction<UserState>) {
-//         const { id, name, email, gender, role } = action.payload;
-//         state.id = id;
-//         state.name = name;
-//         state.email = email;
-//         state.gender = gender;
-//         state.role = role;
-//       },
-//     },
-//   });
-
 const { actions, reducer } = userSlice;
+export const { signOut } = actions;
 export { getUserInfoByToken, createUserBySelf };
 
 export default reducer;
