@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import Modal from '@components/modal';
-import type { ModalProps } from '@components/modal';
-import InputForm, { Section } from '@src/components/inputForm';
 import { DatePicker, Input } from 'antd';
 import type { DatePickerProps } from 'antd';
-import 'moment/locale/ko';
-import locale from 'antd/es/locale/ko_KR';
-import moment from 'moment';
-import Search from '@components/search';
-import { getStadiumList } from '@service/stadiumApi';
-import RadioGroup from '@components/radioGroup';
-import Button from '@src/components/button';
-import { createMatch } from '@service/matchApi';
+import React, { useState, useEffect } from 'react';
 
+import Button from '@components/button';
+import InputForm, { Section } from '@components/inputForm';
+import Modal from '@components/modal';
+import type { ModalProps } from '@components/modal';
+import RadioGroup from '@components/radioGroup';
+import Search from '@components/search';
+import { createMatch } from '@service/matchApi';
+import { getStadiumList } from '@service/stadiumApi';
+
+import 'moment/locale/ko';
 interface MatchInfoProps {
   startAt: string;
   stadiumId: number;

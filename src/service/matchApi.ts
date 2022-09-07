@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { apiUrl } from './config';
+
 import authHeader from './authHeader';
+import { apiUrl } from './config';
 
 const matchAxios = axios.create({ baseURL: `${apiUrl}/matches` });
 // matchAxios.interceptors.response.use(

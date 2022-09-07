@@ -9,8 +9,9 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { useAppDispatch, useAppSelector } from '@src/app/store';
-import { getUserInfoByToken } from '@src/redux/userSlice';
+
+import { useAppDispatch, useAppSelector } from '@app/store';
+import { getUserInfoByToken } from '@redux/userSlice';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -31,9 +32,9 @@ const auth = getAuth(app);
 
 export const signInWithGoogle = async () => {
   const res = await signInWithPopup(auth, provider);
-  const credential = GoogleAuthProvider.credentialFromResult(res);
-  const token = credential?.accessToken;
-  return token;
+  // const credential = GoogleAuthProvider.credentialFromResult(res);
+  // const token = credential?.idToken;
+  return await res.user.getIdToken();
 };
 
 export const signOutGoogle = () => {

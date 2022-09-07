@@ -1,6 +1,7 @@
 import React from 'react';
-import Header from './header';
 import styled from 'styled-components';
+
+import Header from './header';
 
 const Body = styled.div`
   width: 100%;

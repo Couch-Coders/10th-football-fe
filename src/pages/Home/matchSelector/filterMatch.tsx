@@ -1,8 +1,10 @@
+import { Select } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
+
 import SearchInput from '@components/searchSelect';
-import Tag from '@src/components/tag';
-import { Select } from 'antd';
+import Tag from '@components/tag';
+
 import { MatchInfoContext } from './MatchInfoProvider';
 
 const { Option } = Select;

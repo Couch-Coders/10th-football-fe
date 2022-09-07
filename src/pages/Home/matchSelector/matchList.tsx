@@ -1,8 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { MatchInfoContext } from './MatchInfoProvider';
 import { List } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+
 import { getMatches } from '@service/matchApi';
 import { MATCH_NUM_TO_STRING, GENDER_TO_KOR } from '@utils/parse';
+
+import { MatchInfoContext } from './MatchInfoProvider';
 
 interface MatchListProps {
   id: number;

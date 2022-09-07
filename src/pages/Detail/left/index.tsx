@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import Card from '@components/card/simpleCard';
-import Button from '@src/components/button';
-import styled from 'styled-components';
 import { Tag } from 'antd';
-import { useAppSelector } from '@src/app/store';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
+import { useAppSelector } from '@app/store';
+import Button from '@components/button';
+import Card from '@components/card/simpleCard';
 
 const Container = styled.div`
   > *:nth-child(2) {

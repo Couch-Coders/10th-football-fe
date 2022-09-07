@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { apiUrl } from './config';
+
 import authHeader from './authHeader';
+import { apiUrl } from './config';
 
 // Question
 // const token = authHeader()을 함수 실행 전 매번 붙여줘야 한다.

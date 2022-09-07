@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import CommonLayout from '@src/components/commonLayout';
-import TempImg from '@assets/images/football1.jpg';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useAppDispatch, useAppSelector } from '@app/store';
+import TempImg from '@assets/images/football1.jpg';
+import CommonLayout from '@components/commonLayout';
+import { getMatchInfo } from '@redux/matchSlice';
+import { getMatch } from '@service/matchApi';
+
 import LeftSideDetail from './left';
 import RightSideDetail from './right';
-import { useParams } from 'react-router-dom';
-import { getMatch } from '@src/service/matchApi';
-import { useAppDispatch, useAppSelector } from '@src/app/store';
-import { getMatchInfo } from '@src/redux/matchSlice';
 
 const Container = styled.div`
   display: flex;
