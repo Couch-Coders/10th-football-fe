@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 
-import { MatchInfoContext } from '@pages/Home/matchSelector/MatchInfoProvider';
+import { MatchInfoContext } from '@pages/home/matchSelector/MatchInfoProvider';
 import { getStadiumList } from '@service/stadiumApi';
 
 const { Option } = Select;

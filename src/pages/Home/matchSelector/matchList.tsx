@@ -1,7 +1,7 @@
 import { List } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { getMatches } from '@service/matchApi';
+import { getMatch, getMatches } from '@service/matchApi';
 import { MATCH_NUM_TO_STRING, GENDER_TO_KOR } from '@utils/parse';
 
 import { MatchInfoContext } from './MatchInfoProvider';
@@ -23,21 +23,20 @@ const MatchList = () => {
   const { matchDay, gender, status, personnel, stadiumName } = matchData;
   const [matchList, setMatchList] = useState<any[]>();
 
-  // Question
-  // Context API을 사용하기 때문에 매번 setstate가 발생할때 마다 서버에 요청을 보냄
-  // 한번만 보내는 방법이 있을까?
   useEffect(() => {
-    const queryString = Object.entries(matchData)
-      .filter((d) => d[1])
-      .map((d) => d.join('='))
-      .join('&');
-    void getAllMatches(queryString);
+    const queryStringObject = JSON.parse(JSON.stringify(matchData));
+    for (const key in queryStringObject) {
+      if (!queryStringObject[key]) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete queryStringObject[key];
+      }
+    }
+    const requestGetMatch = async () => {
+      const res = await getMatches(queryStringObject);
+      setMatchList(res);
+    };
+    void requestGetMatch();
   }, [matchDay, gender, status, personnel, stadiumName]);
-
-  const getAllMatches = async (queryString: string) => {
-    const res = await getMatches(queryString);
-    setMatchList(res);
-  };
 
   return (
     <List

@@ -1,4 +1,8 @@
-import { DatePicker as AntdDatePicker, ConfigProvider, DatePickerProps } from 'antd';
+import {
+  DatePicker as AntdDatePicker,
+  ConfigProvider,
+  DatePickerProps,
+} from 'antd';
 import locale from 'antd/es/locale/ko_KR';
 import moment from 'moment';
 import React, { useContext, useState, useEffect } from 'react';
@@ -9,12 +13,12 @@ import 'moment/locale/ko';
 
 const DatePicker = () => {
   const { matchData, setMatchData } = useContext(MatchInfoContext);
-  useEffect(() => {
-    setMatchData({
-      ...matchData,
-      matchDay: moment().format('YYYY-MM-DD'),
-    });
-  }, []);
+  // useEffect(() => {
+  //   setMatchData({
+  //     ...matchData,
+  //     matchDay: moment().format('YYYY-MM-DD'),
+  //   });
+  // }, []);
   const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
     setMatchData({
       ...matchData,

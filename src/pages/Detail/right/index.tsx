@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 
 const Container = styled.div`
