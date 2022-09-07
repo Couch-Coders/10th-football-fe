@@ -8,3 +8,5 @@ interface HeaderCardProps {
 const HeaderCard = () => {
   return <Card></Card>;
 };
+
+export default HeaderCard;

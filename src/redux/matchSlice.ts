@@ -8,14 +8,18 @@ interface MatchInfoProps {
     name: string;
     address: string;
     likeCount: number;
+    parking: boolean;
+    rental: boolean;
   };
   matchApplicants: Array<{
     uid: number | string;
     username: string;
   }>;
   rest: number;
-  gender: string;
-  matchNum: number;
+  gender: 'MALE' | 'FEMALE' | 'ALL';
+  matchNum: 10 | 12 | 18;
+  content: string;
+  matchReviews: [{ uid: string; content: string; createdDate: string }];
 }
 
 const initialState: MatchInfoProps = {
@@ -24,11 +28,15 @@ const initialState: MatchInfoProps = {
     name: '',
     address: '',
     likeCount: 0,
+    parking: false,
+    rental: false,
   },
   matchApplicants: [{ uid: '', username: '' }],
   rest: 0,
-  matchNum: 0,
+  matchNum: 10,
   gender: 'MALE',
+  content: '',
+  matchReviews: [{ uid: '', content: '', createdDate: '' }],
 };
 
 const matchSlice = createSlice({

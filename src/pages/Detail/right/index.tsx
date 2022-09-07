@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useAppSelector } from '@app/store';
+import Card from '@components/card/simpleCard';
+import Comments from '@components/comments';
 import type { MatchInfoProps } from '@redux/matchSlice';
 import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 
@@ -29,6 +31,11 @@ const Container = styled.div`
         padding-right: 10px;
         padding-bottom: 10px;
       }
+    }
+    &.map {
+      width: 100%;
+      height: 360px;
+      border: 1px solid black;
     }
   }
 `;
@@ -89,12 +96,32 @@ const RightSideDetail = () => {
       <section className="head">
         <span>like {matchInfo.stadium.likeCount}</span>
         {/* <span>{GENDER_TO_KOR[dummy.gender]}</span> */}
-        <span>{matchInfo.gender}</span>
-        <span>{matchInfo.matchNum}</span>
+        <span>{GENDER_TO_KOR[matchInfo.gender]}</span>
+        <span>{MATCH_NUM_TO_STRING[matchInfo.matchNum]}</span>
       </section>
       <section className="match-info">
-        <div>{dummy.matchStadium.parking ? '주차가능' : '주차불가능'}</div>
-        <div>{dummy.matchStadium.rental ? '대여가능' : '대여불가능'}</div>
+        <div>{matchInfo.stadium.parking ? '주차가능' : '주차불가능'}</div>
+        <div>{matchInfo.stadium.rental ? '대여가능' : '대여불가능'}</div>
+      </section>
+      <section>
+        <Card title="주의사항">{matchInfo.content}</Card>
+      </section>
+      <section className="map">지도</section>
+      <section>
+        {/* <Card title="경기후기">
+          {[1, 2, 3].map((applicant, index) => { */}
+        <Card title="경기후기">
+          {/* {matchInfo.matchReviews.map((applicant, index) => { */}
+          {dummy.matchReviews.map((applicant, index) => {
+            return (
+              <Comments
+                key={index}
+                username={applicant.uid}
+                content={applicant.content}
+              />
+            );
+          })}
+        </Card>
       </section>
     </Container>
   );
