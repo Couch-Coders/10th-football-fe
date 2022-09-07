@@ -4,15 +4,15 @@ import { getUserAPI, createUser } from '@service/userApi';
 import type { UserInfo } from '@service/userApi';
 
 interface UserKeys {
-  uid: number;
-  name: string;
+  uid: string;
+  username: string;
   email: string;
   gender: string;
   role: string;
 }
 
 interface User {
-  profile: UserKeys | null;
+  profile: UserKeys;
   isAuthenticaton: boolean;
 }
 
@@ -38,7 +38,13 @@ const createUserBySelf = createAsyncThunk(
 );
 
 const initialState: User = {
-  profile: null,
+  profile: {
+    uid: '',
+    username: '',
+    email: '',
+    gender: '',
+    role: '',
+  },
   isAuthenticaton: false,
 };
 
@@ -73,5 +79,6 @@ const userSlice = createSlice({
 const { actions, reducer } = userSlice;
 export const { signOut } = actions;
 export { getUserInfoByToken, createUserBySelf };
+export type { User };
 
 export default reducer;
