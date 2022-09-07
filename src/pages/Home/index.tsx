@@ -7,10 +7,10 @@ import Img1 from '@assets/images/football1.jpg';
 import Img2 from '@assets/images/football2.jpg';
 import Img3 from '@assets/images/football3.jpg';
 import CommonLayout from '@components/commonLayout';
+import { testApi } from '@service/matchApi';
+import '@assets/home.scss';
 
 import MatchSelector from './matchSelector';
-
-import '@assets/home.scss';
 
 const MatchContainer = styled.div`
   width: 100%;
@@ -46,6 +46,7 @@ const Home = () => {
       <MatchContainer>
         <MatchSelector />
       </MatchContainer>
+      <button onClick={() => testApi()}>테스트</button>
     </CommonLayout>
   );
 };

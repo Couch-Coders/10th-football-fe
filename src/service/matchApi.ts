@@ -1,15 +1,17 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import authHeader from './authHeader';
 import { apiUrl } from './config';
 
 const matchAxios = axios.create({ baseURL: `${apiUrl}/matches` });
-// matchAxios.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
+matchAxios.interceptors.request.use((config: AxiosRequestConfig) => {
+  config.headers = {
+    // localStorage.getItem('token') ?? ''
+    // => localstorage.getItem('token')!==(null || undefined) ? localstorage.getItem('token') : ''
+    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+  };
+  return config;
+});
 
 interface matchInfo {
   stadiumId: number;
@@ -32,7 +34,7 @@ interface MatchKeys {
 // };
 
 export const createMatch = async (matchInfo: matchInfo) => {
-  return await wrapper(matchAxios.post('', matchInfo, authHeader()));
+  return await wrapper(matchAxios.post('', matchInfo));
 };
 
 export const getMatches = async (queryString: MatchKeys): Promise<any[]> => {
@@ -52,6 +54,10 @@ export const getMatch = async (matchId: number) => {
   const res = await wrapper(matchAxios.get(`${matchId}`));
   if (res) return res.data;
   else return null;
+};
+
+export const testApi = () => {
+  return matchAxios.get(`/test`);
 };
 
 const wrapper = async (
