@@ -1,8 +1,8 @@
 import { Checkbox } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 
 interface CheckboxGroupProps {
   options: Array<{ label: string; value: string | number }>;

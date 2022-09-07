@@ -1,6 +1,6 @@
-import { getUserAPI, createUser } from '@service/userApi';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
+
+import { getUserAPI, createUser } from '@service/userApi';
 import type { UserInfo } from '@service/userApi';
 
 interface UserKeys {

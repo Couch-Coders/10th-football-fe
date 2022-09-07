@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button as AntdButton } from 'antd';
+import React from 'react';
 import '@assets/button.scss';
 
 interface Props {

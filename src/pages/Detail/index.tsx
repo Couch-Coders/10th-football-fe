@@ -1,5 +1,6 @@
 import React from 'react';
-import CommonLayout from '@src/components/commonLayout';
+
+import CommonLayout from '@components/commonLayout';
 
 const Detail = () => {
   return <CommonLayout>detail page</CommonLayout>;

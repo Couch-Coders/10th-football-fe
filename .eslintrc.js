@@ -20,6 +20,22 @@ module.exports = {
     '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/strict-boolean-expressions': 0,
     '@typescript-eslint/promise-function-async': 0,
+    'import/order': [
+      'error',
+      {
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+        groups: ['builtin', 'external', 'internal', 'unknown', ['parent', 'sibling', 'index']],
+        pathGroups: [
+          {
+            pattern: '@{app,components,pages,images,redux,assets,utils,service}/**',
+            group: 'external',
+            position: 'after',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+      },
+    ],
   },
   ignorePatterns: ['.eslintrc.js'],
 };

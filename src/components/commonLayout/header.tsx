@@ -1,17 +1,18 @@
+import { Input, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import Button from '@components/button';
-import Modal from '@components/modal';
-import { signInWithGoogle, signOutGoogle } from '@utils/firebase';
-import { useAppDispatch, useAppSelector } from '@src/app/store';
-import type { RootState } from '@src/app/store';
-import { getUserInfoByToken, createUserBySelf } from '@src/redux/userSlice';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import type { RootState } from '@app/store';
+import { useAppDispatch, useAppSelector } from '@app/store';
 import GButton from '@assets/images/GButton.jpg';
+import Button from '@components/button';
 import InputForm, { Section } from '@components/inputForm';
-import { Input, Select } from 'antd';
-import type { UserInfo } from '@src/service/userApi';
+import Modal from '@components/modal';
+import { getUserInfoByToken, createUserBySelf } from '@redux/userSlice';
+import type { UserInfo } from '@service/userApi';
+import { signInWithGoogle, signOutGoogle } from '@utils/firebase';
 
 const { Option } = Select;
 
