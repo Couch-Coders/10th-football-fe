@@ -1,11 +1,13 @@
-import React from 'react';
 import { Button as AntdButton } from 'antd';
+import React from 'react';
 import '@assets/button.scss';
 
 interface Props {
   children: React.ReactNode;
   onClick: () => void;
   color?: string;
+  style?: React.CSSProperties;
+  disabled?: boolean;
 }
 
 const Button = ({ children, color, ...rest }: Props) => {

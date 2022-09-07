@@ -1,7 +1,8 @@
 import React from 'react';
-import { MatchInfoProvider } from './MatchInfoProvider';
+
 import DateSelect from './dateSelect';
 import FilterMatch from './filterMatch';
+import { MatchInfoProvider } from './MatchInfoProvider';
 import MatchList from './matchList';
 
 const MatchSelector = () => {

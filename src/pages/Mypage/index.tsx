@@ -1,7 +1,9 @@
 import React from 'react';
-import CommonLayout from '@src/components/commonLayout';
 import styled from 'styled-components';
-import { useAppSelector } from '@src/app/store';
+
+import { useAppSelector } from '@app/store';
+import CommonLayout from '@components/commonLayout';
+
 import AdminMyPage from './admin';
 import UserMyPage from './user';
 

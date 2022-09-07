@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Select } from 'antd';
-import { MatchInfoContext } from '@src/pages/home/matchSelector/MatchInfoProvider';
-import { getStadiumList } from '@src/service/stadiumApi';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+
+import { MatchInfoContext } from '@pages/home/matchSelector/MatchInfoProvider';
+import { getStadiumList } from '@service/stadiumApi';
 
 const { Option } = Select;
 const dummy = ['강남구', '마포구', '송파구'];

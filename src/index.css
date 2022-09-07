@@ -58,3 +58,7 @@ body{
 a{
   text-decoration: none;
 }
+
+#root {
+	padding-bottom: 300px;
+}

@@ -1,8 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { MatchInfoContext } from './MatchInfoProvider';
 import { List } from 'antd';
-import { getMatches } from '@service/matchApi';
+import React, { useContext, useEffect, useState } from 'react';
+
+import { getMatch, getMatches } from '@service/matchApi';
 import { MATCH_NUM_TO_STRING, GENDER_TO_KOR } from '@utils/parse';
+
+import { MatchInfoContext } from './MatchInfoProvider';
 
 interface MatchListProps {
   id: number;
@@ -20,18 +22,21 @@ const MatchList = () => {
   const { matchData } = useContext(MatchInfoContext);
   const { matchDay, gender, status, personnel, stadiumName } = matchData;
   const [matchList, setMatchList] = useState<any[]>();
-  useEffect(() => {
-    const queryString = Object.entries(matchData)
-      .filter((d) => d[1])
-      .map((d) => d.join('='))
-      .join('&');
-    void getAllMatches(queryString);
-  }, [matchDay, gender, status, personnel, stadiumName]);
 
-  const getAllMatches = async (queryString: string) => {
-    const res = await getMatches(queryString);
-    setMatchList(res);
-  };
+  useEffect(() => {
+    const queryStringObject = JSON.parse(JSON.stringify(matchData));
+    for (const key in queryStringObject) {
+      if (!queryStringObject[key]) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete queryStringObject[key];
+      }
+    }
+    const requestGetMatch = async () => {
+      const res = await getMatches(queryStringObject);
+      setMatchList(res);
+    };
+    void requestGetMatch();
+  }, [matchDay, gender, status, personnel, stadiumName]);
 
   return (
     <List

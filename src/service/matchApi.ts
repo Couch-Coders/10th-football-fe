@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { apiUrl } from './config';
+
 import authHeader from './authHeader';
+import { apiUrl } from './config';
 
 const matchAxios = axios.create({ baseURL: `${apiUrl}/matches` });
 // matchAxios.interceptors.response.use(
@@ -18,6 +19,14 @@ interface matchInfo {
   startAt: string;
 }
 
+interface MatchKeys {
+  matchDay?: string;
+  gender?: string;
+  status?: string;
+  personnel?: number;
+  stadiumName?: string;
+}
+
 // export const createMatch = (matchInfo: matchInfo) => {
 //   return matchAxios.post(`${apiUrl}/matches`, matchInfo, authHeader());
 // };
@@ -26,8 +35,13 @@ export const createMatch = async (matchInfo: matchInfo) => {
   return await wrapper(matchAxios.post('', matchInfo, authHeader()));
 };
 
-export const getMatches = async (queryString: string): Promise<any[]> => {
-  const res = await wrapper(axios.get(`${apiUrl}/matches?${queryString}`));
+export const getMatches = async (queryString: MatchKeys): Promise<any[]> => {
+  console.log(queryString);
+  const res = await wrapper(
+    matchAxios.get(``, {
+      params: queryString,
+    }),
+  );
   if (res.data) {
     return res.data.content;
   } else {
@@ -35,18 +49,11 @@ export const getMatches = async (queryString: string): Promise<any[]> => {
   }
 };
 
-// const Wrapper = async (myFunc: () => Promise<AxiosResponse<any, any>>) => {
-//   try {
-//     const res = await myFunc();
-//     return res.data;
-//   } catch (error) {
-//     if (error instanceof AxiosError) {
-//       return error.message;
-//     } else {
-//       return error;
-//     }
-//   }
-// };
+export const getMatch = async (matchId: number) => {
+  const res = await wrapper(matchAxios.get(`${matchId}`));
+  if (res) return res.data;
+  else return null;
+};
 
 const wrapper = async (
   myFunc: Promise<AxiosResponse<any, any>>,

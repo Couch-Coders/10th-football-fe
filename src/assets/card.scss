@@ -1,0 +1,16 @@
+.simple-card {
+    border: none !important;
+    border-radius: 20px;
+    font-size: 1rem;
+    &.header- {
+        &black{
+            >.ant-card-head {
+                background-color: #191718 !important;
+                color: #FAFAFA;
+            }
+        }
+    }
+    &.borderRadius {
+        border-radius: 50% !important;
+    }
+}

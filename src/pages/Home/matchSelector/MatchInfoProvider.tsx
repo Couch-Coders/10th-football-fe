@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, {
   createContext,
   Dispatch,
@@ -15,10 +16,16 @@ export interface MatchKeys {
 
 interface MatchInfoProps {
   matchData: MatchKeys;
-  setMatchData: Dispatch<SetStateAction<{}>>;
+  setMatchData: Dispatch<SetStateAction<any>>;
 }
 export const MatchInfoContext = createContext<MatchInfoProps>({
-  matchData: {},
+  matchData: {
+    matchDay: moment().format('YYYY-MM-DD'),
+    status: '',
+    gender: '',
+    stadiumName: '',
+    personnel: 0,
+  },
   setMatchData: () => {},
 });
 
@@ -27,7 +34,13 @@ export const MatchInfoProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [matchInfo, setMatchInfo] = useState({});
+  const [matchInfo, setMatchInfo] = useState({
+    matchDay: moment().format('YYYY-MM-DD'),
+    status: '',
+    gender: '',
+    personnel: 0,
+    stadiumName: '',
+  });
   return (
     <MatchInfoContext.Provider
       value={{

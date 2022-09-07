@@ -1,8 +1,10 @@
+import { Select } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
+
 import SearchInput from '@components/searchSelect';
-import Tag from '@src/components/tag';
-import { Select } from 'antd';
+import Tag from '@components/tag';
+
 import { MatchInfoContext } from './MatchInfoProvider';
 
 const { Option } = Select;
@@ -24,32 +26,10 @@ const SearchContainer = styled.div`
 `;
 
 const FilterMatch = () => {
-  const [selectInfo, setSelectInfo] = useState({
-    status: '',
-    gender: '',
-    personnel: 0,
-  });
   const { matchData, setMatchData } = useContext(MatchInfoContext);
-  const { matchDay } = matchData;
-
-  // Question
-  // dateSelect 에서 ContextAPI의 matchData의 matchDay을 재설정
-  // 그와 동시에 이 useEffect도 발생하여 matchDay가 덮어씌어지는 현상
-  useEffect(() => {
-    if (matchDay) {
-      setMatchData({
-        ...matchData,
-        ...selectInfo,
-      });
-    }
-  }, [matchDay]);
 
   const onChange = (value: number | string, optionObj: any) => {
     const key = optionObj?.key.split('Option')[0];
-    setSelectInfo({
-      ...selectInfo,
-      [key]: value,
-    });
     setMatchData({
       ...matchData,
       [key]: value,

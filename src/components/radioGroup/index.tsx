@@ -1,6 +1,6 @@
-import React from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio } from 'antd';
+import React from 'react';
 
 interface RadioGroupProps {
   options: Array<{ label: string; value: string | number }>;

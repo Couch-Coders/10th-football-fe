@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import Button from '@src/components/button';
 import styled from 'styled-components';
+
+import Button from '@components/button';
+
 import MatchCreateModal from './matchCreateModal';
 import StadiumCreateModal from './stadiumCreateModal';
 
