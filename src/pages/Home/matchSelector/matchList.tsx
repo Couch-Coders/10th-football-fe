@@ -1,5 +1,11 @@
 import { List } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  MouseEventHandler,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { getMatch, getMatches } from '@service/matchApi';
 import { MATCH_NUM_TO_STRING, GENDER_TO_KOR } from '@utils/parse';
@@ -22,6 +28,7 @@ const MatchList = () => {
   const { matchData } = useContext(MatchInfoContext);
   const { matchDay, gender, status, personnel, stadiumName } = matchData;
   const [matchList, setMatchList] = useState<any[]>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const queryStringObject = JSON.parse(JSON.stringify(matchData));
@@ -46,7 +53,10 @@ const MatchList = () => {
       renderItem={(item: MatchListProps) => (
         <List.Item
           id={item.id.toString()}
-          onClick={() => {}}
+          onClick={(e) => {
+            const target = e.target as HTMLLIElement;
+            navigate(`/detail/${target.id}`);
+          }}
           style={{ cursor: 'pointer' }}
         >
           <span>{item.startAt.split('T')[1].slice(0, 5)}</span>

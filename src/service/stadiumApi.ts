@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 import { apiUrl } from './config';
 
-const stadiumAxios = axios.create({ baseURL: `${apiUrl}/` });
+const stadiumAxios = axios.create({ baseURL: `${apiUrl}/stadiums` });
 stadiumAxios.interceptors.request.use((config: AxiosRequestConfig) => {
   config.headers = {
     // localStorage.getItem('token') ?? ''
@@ -20,11 +20,11 @@ export const createStadium = (stadiumInfo: {
   address: string;
   imageUrl: string;
 }) => {
-  return axios.post(`${apiUrl}/stadiums`, stadiumInfo);
+  return stadiumAxios.post(``, stadiumInfo);
 };
 
 export const getStadiumList = (address: string) => {
-  return stadiumAxios.get('/stadium', {
+  return stadiumAxios.get('', {
     params: {
       address,
     },
