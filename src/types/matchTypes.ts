@@ -1,7 +1,7 @@
-interface MatchInfo {
+interface CreateMatchInfo {
   stadiumId: number;
   matchNum: number;
-  gender: string;
+  matchGender: string;
   content: string;
   startAt: string;
 }
@@ -14,4 +14,4 @@ interface MatchKeys {
   stadiumName?: string;
 }
 
-export type { MatchInfo, MatchKeys };
+export type { CreateMatchInfo, MatchKeys };
