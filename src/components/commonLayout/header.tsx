@@ -158,7 +158,9 @@ const Header = () => {
       <AbsoluteHeader>
         <div>
           <div>
-            <div onClick={() => navigate('/')}>Football</div>
+            <div onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+              Football
+            </div>
             <div>
               {isLoggedIn ? (
                 <div className="flex">
