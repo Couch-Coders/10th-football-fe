@@ -3,31 +3,10 @@ import styled from 'styled-components';
 
 import { useAppSelector } from '@app/store';
 import CommonLayout from '@components/commonLayout';
+import type { User } from '@redux/userSlice';
 
 import AdminMyPage from './admin';
 import UserMyPage from './user';
-
-interface UserKeys {
-  uid: number;
-  name: string;
-  email: string;
-  gender: string;
-  role: string;
-}
-
-interface User {
-  user: UserKeys | null;
-}
-
-const dummy: User = {
-  user: {
-    uid: 1,
-    name: '관리자',
-    email: 'admin@gamil.com',
-    gender: 'MALE',
-    role: 'ADMIN',
-  },
-};
 
 const H1 = styled.h1`
   font-size: 20px;
@@ -37,16 +16,24 @@ const H1 = styled.h1`
   }
 `;
 
+interface UserKeys {
+  uid: number;
+  username: string;
+  email: string;
+  gender: string;
+  role: string;
+}
+
 const Mypage = () => {
-  // const { user } = useAppSelector((state) => state.user);
-  const { user } = dummy;
+  const { profile } = useAppSelector<User>((state) => state.user);
   return (
     <CommonLayout>
       <H1>
-        <span>{user?.name}</span>님 안녕하세요!
+        <span>{profile.username}</span>님 안녕하세요!
       </H1>
       <section>
-        {user?.role === 'ADMIN' ? <AdminMyPage /> : <UserMyPage />}
+        {/* {profile.role === 'ADMIN' ? <AdminMyPage /> : <UserMyPage />} */}
+        <AdminMyPage />
       </section>
     </CommonLayout>
   );

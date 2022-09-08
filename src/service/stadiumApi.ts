@@ -1,11 +1,16 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
-import authHeader from './authHeader';
 import { apiUrl } from './config';
 
-// Question
-// const token = authHeader()을 함수 실행 전 매번 붙여줘야 한다.
-// 매번 안붙이고 선행으로 authHeader값을 선언하지 않고 하는 방법
+const stadiumAxios = axios.create({ baseURL: `${apiUrl}/stadiums` });
+stadiumAxios.interceptors.request.use((config: AxiosRequestConfig) => {
+  config.headers = {
+    // localStorage.getItem('token') ?? ''
+    // => localstorage.getItem('token')!==(null || undefined) ? localstorage.getItem('token') : ''
+    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+  };
+  return config;
+});
 
 export const createStadium = (stadiumInfo: {
   name: string;
@@ -15,10 +20,13 @@ export const createStadium = (stadiumInfo: {
   address: string;
   imageUrl: string;
 }) => {
-  return axios.post(`${apiUrl}/stadiums`, stadiumInfo, authHeader());
+  return stadiumAxios.post(``, stadiumInfo);
 };
 
 export const getStadiumList = (address: string) => {
-  // return axios.get(`${apiUrl}/stadiums?address=${address}`, authHeader());
-  return axios.get(`${apiUrl}/search`, authHeader());
+  return stadiumAxios.get('', {
+    params: {
+      address,
+    },
+  });
 };

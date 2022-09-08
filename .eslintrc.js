@@ -25,10 +25,17 @@ module.exports = {
       {
         'newlines-between': 'always',
         alphabetize: { order: 'asc', caseInsensitive: true },
-        groups: ['builtin', 'external', 'internal', 'unknown', ['parent', 'sibling', 'index']],
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'unknown',
+          ['parent', 'sibling', 'index'],
+        ],
         pathGroups: [
           {
-            pattern: '@{app,components,pages,images,redux,assets,utils,service}/**',
+            pattern:
+              '@{app,components,pages,images,redux,assets,utils,service,custype}/**',
             group: 'external',
             position: 'after',
           },
