@@ -2,6 +2,7 @@
     border: none !important;
     border-radius: 20px;
     font-size: 1rem;
+    width: 100%;
     &.header- {
         &black{
             >.ant-card-head {
@@ -11,6 +12,11 @@
         }
     }
     &.borderRadius {
-        border-radius: 50% !important;
+        border-radius: 10px !important;
+        >.ant-card-head{
+            border-radius: 15px 15px 0 0;   
+        }
     }
+    &.sm{ width: 280px !important;}
+    &.md{width: 390px !important;}
 }

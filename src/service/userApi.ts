@@ -37,3 +37,7 @@ export const createUser = (userInfo: UserInfo) => {
     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
   });
 };
+
+export const getAppliedMatchListBySelf = () => {
+  return userAxios.get(`/me/applications`);
+};

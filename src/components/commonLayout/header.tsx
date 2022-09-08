@@ -72,9 +72,6 @@ const Header = () => {
       localStorage.setItem('token', token);
       await dispatch(getUserInfoByToken(token)).unwrap();
     } catch (error: any) {
-      // Question
-      // 이게 맞는 error handling 방식?
-      // custom error message을 보냈을 경우 어떻게 해야 하는지
       if (error.message === 'NEW_USER') {
         setSignupOpen(true);
       } else {

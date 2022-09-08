@@ -33,7 +33,7 @@ const Mypage = () => {
       </H1>
       <section>
         {/* {profile.role === 'ADMIN' ? <AdminMyPage /> : <UserMyPage />} */}
-        <AdminMyPage />
+        <UserMyPage />
       </section>
     </CommonLayout>
   );

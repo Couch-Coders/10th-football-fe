@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getUserAPI, createUser } from '@service/userApi';
 import type { UserInfo } from '@service/userApi';
+import { checkUserToken } from '@utils/user';
 
 interface UserKeys {
   uid: string;
@@ -64,6 +65,7 @@ const userSlice = createSlice({
         return;
       }
       console.log('error while operating getUserInfoByToken: ', action);
+      if (checkUserToken()) localStorage.removeItem('token');
     });
     builder.addCase(
       createUserBySelf.fulfilled,
