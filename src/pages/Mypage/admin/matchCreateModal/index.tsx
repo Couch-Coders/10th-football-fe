@@ -59,7 +59,17 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
       return;
     }
 
-    await createMatch(matchInfo);
+    // hacky way
+    let tempMatchInfo = JSON.parse(JSON.stringify(matchInfo));
+    tempMatchInfo = {
+      ...tempMatchInfo,
+      stadiumId:
+        typeof tempMatchInfo.stadiumId === 'string'
+          ? parseInt(tempMatchInfo.stadiumId)
+          : tempMatchInfo.stadiumId,
+    };
+
+    await createMatch(tempMatchInfo);
   };
 
   return (
