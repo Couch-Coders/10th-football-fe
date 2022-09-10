@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getUserAPI, createUser } from '@service/userApi';
+import { PaginationProps } from '@custype/matchTypes';
+import {
+  getUserAPI,
+  createUser,
+  getAppliedMatchListBySelfApi,
+} from '@service/userApi';
 import type { UserInfo } from '@service/userApi';
 import { checkUserToken } from '@utils/user';
 
@@ -15,6 +20,7 @@ interface UserKeys {
 interface User {
   profile: UserKeys;
   isAuthenticaton: boolean;
+  appliedMatch: any[];
 }
 
 const getUserInfoByToken = createAsyncThunk(
@@ -38,6 +44,19 @@ const createUserBySelf = createAsyncThunk(
   },
 );
 
+const getAppliedMatchListBySelf = createAsyncThunk(
+  'users/getAppliedMatchList',
+  async (pageInfo: PaginationProps, { rejectWithValue }) => {
+    try {
+      const response = await getAppliedMatchListBySelfApi(pageInfo);
+      return response.data;
+    } catch (error: any) {
+      // return rejectWithValue(error.response.data);
+      return await Promise.reject(error);
+    }
+  },
+);
+
 const initialState: User = {
   profile: {
     uid: '',
@@ -47,6 +66,7 @@ const initialState: User = {
     role: '',
   },
   isAuthenticaton: false,
+  appliedMatch: [],
 };
 
 const userSlice = createSlice({
@@ -75,12 +95,19 @@ const userSlice = createSlice({
       console.error('error while operating createUserBySelf:');
       localStorage.removeItem('token');
     });
+    builder.addCase(getAppliedMatchListBySelf.fulfilled, (state, action) => {
+      state.appliedMatch = action.payload.content;
+    });
+    builder.addCase(getAppliedMatchListBySelf.rejected, (state, action) => {
+      state.appliedMatch = [];
+      console.error('error while getAppliedMatchListBySelf: ', action);
+    });
   },
 });
 
 const { actions, reducer } = userSlice;
 export const { signOut } = actions;
-export { getUserInfoByToken, createUserBySelf };
+export { getUserInfoByToken, createUserBySelf, getAppliedMatchListBySelf };
 export type { User };
 
 export default reducer;

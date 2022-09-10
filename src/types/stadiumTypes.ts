@@ -7,4 +7,17 @@ interface CreateStadiumProps {
   imageUrl: string;
 }
 
-export type { CreateStadiumProps };
+interface AppliedMatchInfoProps {
+  applicationId: number;
+  match: {
+    id: number;
+    stadium: {
+      id: number;
+      name: string;
+    };
+    startAt: string;
+    status: string;
+  };
+}
+
+export type { CreateStadiumProps, AppliedMatchInfoProps };

@@ -1,3 +1,8 @@
+interface PaginationProps {
+  page?: number;
+  size?: number;
+}
+
 interface CreateMatchInfo {
   stadiumId: number;
   matchNum: number;
@@ -14,4 +19,4 @@ interface MatchKeys {
   stadiumName?: string;
 }
 
-export type { CreateMatchInfo, MatchKeys };
+export type { PaginationProps, CreateMatchInfo, MatchKeys };
