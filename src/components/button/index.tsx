@@ -4,10 +4,11 @@ import '@assets/button.scss';
 
 interface Props {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick: (e: any | null) => void;
   color?: string;
   style?: React.CSSProperties;
   disabled?: boolean;
+  value?: any;
 }
 
 const Button = ({ children, color, ...rest }: Props) => {
