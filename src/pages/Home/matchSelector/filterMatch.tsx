@@ -2,6 +2,7 @@ import { Select } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import Button from '@components/button';
 import SearchInput from '@components/searchSelect';
 import Tag from '@components/tag';
 
@@ -27,6 +28,7 @@ const SearchContainer = styled.div`
 
 const FilterMatch = () => {
   const { matchData, setMatchData } = useContext(MatchInfoContext);
+  const { status } = matchData;
 
   const onChange = (value: number | string, optionObj: any) => {
     const key = optionObj?.key.split('Option')[0];
@@ -40,19 +42,34 @@ const FilterMatch = () => {
       <SearchContainer>
         <SearchInput />
       </SearchContainer>
-      <Select onChange={onChange} placeholder="마감여부">
-        {['마감 가리기', '마감 보이기'].map((str, index) => {
-          return (
-            <Option
-              key={`statusOption${index}`}
-              value={index === 0 ? 'CLOSE' : 'OPEN'}
-            >
-              {str}
-            </Option>
-          );
-        })}
-      </Select>
-
+      {status === '' ? (
+        <Button
+          value={'OPEN'}
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            const [value, optionObj] = [
+              e.currentTarget.value,
+              { key: 'statusOption' },
+            ];
+            onChange(value, optionObj);
+          }}
+        >
+          마감가리기
+        </Button>
+      ) : (
+        <Button
+          value={''}
+          color="yellow"
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            const [value, optionObj] = [
+              e.currentTarget.value,
+              { key: 'statusOption' },
+            ];
+            onChange(value, optionObj);
+          }}
+        >
+          전체조회
+        </Button>
+      )}
       <Select onChange={onChange} placeholder="성별">
         {[
           { label: '남', value: 'MALE' },

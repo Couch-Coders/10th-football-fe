@@ -24,7 +24,9 @@ export const createMatch = async (matchInfo: CreateMatchInfo) => {
   return await matchAxios.post('', matchInfo);
 };
 
-export const getMatches = async (queryString: MatchKeys): Promise<any[]> => {
+export const getMatchesApi = async (
+  queryString: MatchKeys = {},
+): Promise<any[]> => {
   const res = await matchAxios.get(``, {
     params: queryString,
   });
@@ -39,6 +41,14 @@ export const getMatch = async (matchId: number) => {
   const res = await matchAxios.get(`${matchId}`);
   if (res) return res.data;
   else return null;
+};
+
+export const applyMatchApi = (matchId: number) => {
+  return matchAxios.post(`applications/${matchId}`);
+};
+
+export const deleteMatchByAdminApi = (matchId: number) => {
+  return matchAxios.delete(`${matchId}`);
 };
 
 // const wrapper = async (

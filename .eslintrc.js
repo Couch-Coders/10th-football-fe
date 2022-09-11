@@ -20,6 +20,7 @@ module.exports = {
     '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/strict-boolean-expressions': 0,
     '@typescript-eslint/promise-function-async': 0,
+    '@typescript-eslint/restrict-template-expressions': 'warn',
     'import/order': [
       'error',
       {

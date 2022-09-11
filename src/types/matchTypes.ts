@@ -19,4 +19,16 @@ interface MatchKeys {
   stadiumName?: string;
 }
 
-export type { PaginationProps, CreateMatchInfo, MatchKeys };
+interface MatchListProps {
+  id: number;
+  startAt: string;
+  gender: 'MALE' | 'FEMALE' | 'ALL';
+  stadium: {
+    address: string;
+    name: string;
+  };
+  matchNum: 10 | 12 | 18;
+  status: 'OPEN' | 'CLOSE';
+}
+
+export type { PaginationProps, CreateMatchInfo, MatchKeys, MatchListProps };
