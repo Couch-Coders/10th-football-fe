@@ -5,6 +5,7 @@ import { getMatch } from '@service/matchApi';
 interface MatchInfoProps {
   startAt: string;
   stadium: {
+    id: number;
     name: string;
     address: string;
     likeCount: number;
@@ -25,6 +26,7 @@ interface MatchInfoProps {
 const initialState: MatchInfoProps = {
   startAt: '',
   stadium: {
+    id: 0,
     name: '',
     address: '',
     likeCount: 0,
@@ -45,9 +47,22 @@ const matchSlice = createSlice({
   reducers: {
     getMatchInfo: (state, action: PayloadAction<MatchInfoProps>) =>
       action.payload,
+    increaseLikeCount: (state) => {
+      state.stadium = {
+        ...state.stadium,
+        likeCount: state.stadium.likeCount + 1,
+      };
+    },
+    decreaseLikeCount: (state) => {
+      state.stadium = {
+        ...state.stadium,
+        likeCount: state.stadium.likeCount - 1,
+      };
+    },
   },
 });
 
-export const { getMatchInfo } = matchSlice.actions;
+export const { getMatchInfo, increaseLikeCount, decreaseLikeCount } =
+  matchSlice.actions;
 export type { MatchInfoProps };
 export default matchSlice.reducer;

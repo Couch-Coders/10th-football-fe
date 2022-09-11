@@ -2,7 +2,9 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 import type { PaginationProps } from '@custype/matchTypes';
 
-const reviewAxios = axios.create({ baseURL: '/reviews' });
+import { apiUrl } from './config';
+
+const reviewAxios = axios.create({ baseURL: `${apiUrl}/reviews` });
 reviewAxios.interceptors.request.use((config: AxiosRequestConfig) => {
   config.headers = {
     Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,

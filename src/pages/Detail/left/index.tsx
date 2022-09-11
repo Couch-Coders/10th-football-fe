@@ -6,6 +6,7 @@ import { useAppSelector } from '@app/store';
 import Button from '@components/button';
 import Card from '@components/card/simpleCard';
 import type { MatchInfoProps } from '@redux/matchSlice';
+import { checkUserToken } from '@utils/user';
 
 const Container = styled.div`
   > *:nth-child(2) {
@@ -47,6 +48,7 @@ const ApplicantsContainer = styled.div``;
 
 const LeftSideDetail = () => {
   const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
+  const user = useAppSelector((state) => state.user);
   return (
     <Container>
       <Card>
@@ -61,18 +63,19 @@ const LeftSideDetail = () => {
           </Button>
         </MatchRequestCard>
       </Card>
-      {/* Admin일 경우에만 해당 컴포넌트가 보여야 한다. */}
-      <Card>
-        <ApplicantsContainer>
-          {matchInfo.matchApplicants.map((applicant) => {
-            return (
-              <Tag key={`badge_${applicant.uid}`}>
-                {`${applicant.username}(${applicant.uid})`}
-              </Tag>
-            );
-          })}
-        </ApplicantsContainer>
-      </Card>
+      {checkUserToken() && user.profile.role === 'ADMIN' && (
+        <Card>
+          <ApplicantsContainer>
+            {matchInfo.matchApplicants.map((applicant) => {
+              return (
+                <Tag key={`badge_${applicant.uid}`}>
+                  {`${applicant.username}(${applicant.uid})`}
+                </Tag>
+              );
+            })}
+          </ApplicantsContainer>
+        </Card>
+      )}
     </Container>
   );
 };
