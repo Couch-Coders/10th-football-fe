@@ -62,3 +62,7 @@ a{
 #root {
 	padding-bottom: 300px;
 }
+
+.ant-message{
+	z-index: 9999;
+}

@@ -24,7 +24,7 @@ const { Option } = Select;
 const AbsoluteHeader = styled.div`
   position: relative;
   height: 50px;
-  z-index: 9999;
+  z-index: 9998;
   > div:first-child {
     width: 100%;
     height: inherit;

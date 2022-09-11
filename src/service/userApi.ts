@@ -51,3 +51,7 @@ export const getAppliedMatchListBySelfApi = (pageInfo: PaginationProps) => {
     params: pageInfo,
   });
 };
+
+export const getSelfReviewApi = (matchId: number) => {
+  return userAxios.get(`/me/reviews/${matchId}`);
+};
