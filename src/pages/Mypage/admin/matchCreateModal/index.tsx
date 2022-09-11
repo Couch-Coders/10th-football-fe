@@ -15,7 +15,14 @@ import { getStadiumList } from '@service/stadiumApi';
 
 import 'moment/locale/ko';
 
-const MatchCreateModal = ({ ...rest }: ModalProps) => {
+interface MatchCreateModalProps extends ModalProps {
+  matchInfoForPatch?: CreateMatchInfo;
+}
+
+const MatchCreateModal = ({
+  matchInfoForPatch,
+  ...rest
+}: MatchCreateModalProps) => {
   const [matchInfo, setMatchInfo] = useState<CreateMatchInfo>({
     startAt: '',
     stadiumId: 0,
@@ -23,7 +30,11 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
     content: '',
     matchNum: 0,
   });
-  // console.log(matchInfo);
+
+  useEffect(() => {
+    if (matchInfoForPatch) setMatchInfo(matchInfoForPatch);
+  }, []);
+
   useEffect(() => {
     // Question componentwillunmount 생명주기 방법?
     // 현업에서는 어떻게 사용하는지 궁금합니다.

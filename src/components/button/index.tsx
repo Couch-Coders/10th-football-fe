@@ -9,6 +9,7 @@ interface Props {
   style?: React.CSSProperties;
   disabled?: boolean;
   value?: any;
+  danger?: any;
 }
 
 const Button = ({ children, color, ...rest }: Props) => {
