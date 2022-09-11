@@ -1,11 +1,14 @@
 import { Tag } from 'antd';
+import { AxiosError } from 'axios';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useAppSelector } from '@app/store';
 import Button from '@components/button';
 import Card from '@components/card/simpleCard';
+import { ErrorToast } from '@components/toasts';
 import type { MatchInfoProps } from '@redux/matchSlice';
+import { applyMatchApi } from '@service/matchApi';
 import { checkUserToken } from '@utils/user';
 
 const Container = styled.div`
@@ -49,6 +52,24 @@ const ApplicantsContainer = styled.div``;
 const LeftSideDetail = () => {
   const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
   const user = useAppSelector((state) => state.user);
+
+  const applyMatch = async () => {
+    if (checkUserToken()) {
+      alert('로그인 후 이용해주세요!');
+      return;
+    }
+    try {
+      const { id } = matchInfo;
+      const res = await applyMatchApi(id);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        ErrorToast(error.response?.data.message || error.message);
+      } else {
+        console.error(error);
+        ErrorToast();
+      }
+    }
+  };
   return (
     <Container>
       <Card>
@@ -56,7 +77,7 @@ const LeftSideDetail = () => {
           <div>{matchInfo.startAt.split('.')[0]}</div>
           <div>{matchInfo.stadium.name}</div>
           <div>{matchInfo.stadium.address}</div>
-          <Button onClick={() => {}} disabled={matchInfo.rest === 0}>
+          <Button onClick={applyMatch} disabled={matchInfo.rest === 0}>
             신청하기
             <br />
             <span>마감까지 {matchInfo.rest}자리 남았어요!</span>

@@ -41,6 +41,10 @@ export const getMatch = async (matchId: number) => {
   else return null;
 };
 
+export const applyMatchApi = (matchId: number) => {
+  return matchAxios.post(`applications/${matchId}`);
+};
+
 // const wrapper = async (
 //   myFunc: Promise<AxiosResponse<any, any>>,
 // ): Promise<any> => {

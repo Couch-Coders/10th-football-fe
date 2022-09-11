@@ -1,3 +1,4 @@
+import { TeamOutlined } from '@ant-design/icons';
 import { Avatar, Input, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -156,7 +157,9 @@ const Header = () => {
         <div>
           <div>
             <div onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
-              Football
+              <span>
+                <TeamOutlined style={{ fontSize: '1.5rem' }} /> 풋볼
+              </span>
             </div>
             <div>
               {isLoggedIn ? (
