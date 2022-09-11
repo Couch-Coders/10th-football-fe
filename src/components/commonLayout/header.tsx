@@ -1,16 +1,15 @@
 import { TeamOutlined } from '@ant-design/icons';
 import { Avatar, Input, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import type { RootState } from '@app/store';
 import { useAppDispatch, useAppSelector } from '@app/store';
 import GButton from '@assets/images/GButton.jpg';
 import Button from '@components/button';
 import InputForm, { Section } from '@components/inputForm';
 import Modal from '@components/modal';
+import { SuccessToast } from '@components/toasts';
 import {
   getUserInfoByToken,
   createUserBySelf,
@@ -90,6 +89,7 @@ const Header = () => {
     await signOutGoogle();
     deleteTokenInLocalStorage();
     dispatch(signOutAction());
+    SuccessToast('로그아웃 성공!');
   };
 
   return (
@@ -119,7 +119,7 @@ const Header = () => {
               onChange={(gender) =>
                 setSignupInfo({
                   ...signupInfo,
-                  gender: gender,
+                  gender,
                 })
               }
               value={signupInfo.gender}
