@@ -53,13 +53,12 @@ const MatchList = () => {
       renderItem={(item: MatchListProps) => (
         <List.Item
           id={item.id.toString()}
-          onClick={(e) => {
-            const target = e.target as HTMLLIElement;
-            navigate(`/detail/${target.id}`);
-          }}
+          onClick={(e) => navigate(`/detail/${e.currentTarget.id}`)}
           style={{ cursor: 'pointer' }}
         >
-          <span>{item.startAt.split('T')[1].slice(0, 5)}</span>
+          <span onClick={(e) => console.log(e)}>
+            {item.startAt.split('T')[1].slice(0, 5)}
+          </span>
           <span>{item.stadium.address + ' ' + item.stadium.name}</span>
           <span>{GENDER_TO_KOR[item.gender]}</span>
           <span>{MATCH_NUM_TO_STRING[item.matchNum]}</span>

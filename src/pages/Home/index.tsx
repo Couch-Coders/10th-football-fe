@@ -25,7 +25,7 @@ const MatchContainer = styled.div`
 const Home = () => {
   return (
     <CommonLayout>
-      <Carousel className="home-caro">
+      <Carousel className="home-caro" autoplay>
         <div>
           <div className="item first">
             {/* <img src={Img1} width="100%" /> */}

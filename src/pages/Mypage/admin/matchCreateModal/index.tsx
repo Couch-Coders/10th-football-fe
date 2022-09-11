@@ -1,5 +1,6 @@
 import { DatePicker, Input } from 'antd';
 import type { DatePickerProps } from 'antd';
+import { AxiosError } from 'axios';
 import React, { useState, useEffect } from 'react';
 
 import Button from '@components/button';
@@ -8,23 +9,17 @@ import Modal from '@components/modal';
 import type { ModalProps } from '@components/modal';
 import RadioGroup from '@components/radioGroup';
 import Search from '@components/search';
+import type { CreateMatchInfo } from '@custype/matchTypes';
 import { createMatch } from '@service/matchApi';
 import { getStadiumList } from '@service/stadiumApi';
 
 import 'moment/locale/ko';
-interface MatchInfoProps {
-  startAt: string;
-  stadiumId: number;
-  gender: string;
-  content: string;
-  matchNum: number;
-}
 
 const MatchCreateModal = ({ ...rest }: ModalProps) => {
-  const [matchInfo, setMatchInfo] = useState<MatchInfoProps>({
+  const [matchInfo, setMatchInfo] = useState<CreateMatchInfo>({
     startAt: '',
     stadiumId: 0,
-    gender: '',
+    matchGender: '',
     content: '',
     matchNum: 0,
   });
@@ -37,7 +32,7 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
         setMatchInfo({
           startAt: '',
           stadiumId: 0,
-          gender: '',
+          matchGender: '',
           content: '',
           matchNum: 0,
         });
@@ -53,13 +48,32 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
   };
 
   const createAction = async () => {
-    const { startAt, stadiumId, gender, matchNum } = matchInfo;
-    if (!startAt || !stadiumId || !gender || !matchNum) {
+    const { startAt, stadiumId, matchGender, matchNum } = matchInfo;
+    if (!startAt || !stadiumId || !matchGender || !matchNum) {
       console.log('입력되지 않은 필드가 있습니다.');
       return;
     }
 
-    await createMatch(matchInfo);
+    // hacky way
+    let tempMatchInfo = JSON.parse(JSON.stringify(matchInfo));
+    tempMatchInfo = {
+      ...tempMatchInfo,
+      stadiumId:
+        typeof tempMatchInfo.stadiumId === 'string'
+          ? parseInt(tempMatchInfo.stadiumId)
+          : tempMatchInfo.stadiumId,
+    };
+    try {
+      await createMatch(tempMatchInfo);
+      rest.onCancel();
+      alert('저장되었습니다!');
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(`저장실패: ${error.message}`);
+      } else {
+        alert('저장실패!');
+      }
+    }
   };
 
   return (
@@ -92,10 +106,10 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
             onChange={(e) =>
               setMatchInfo({
                 ...matchInfo,
-                gender: e.target.value,
+                matchGender: e.target.value,
               })
             }
-            value={matchInfo.gender}
+            value={matchInfo.matchGender}
           />
         </Section>
         <Section header="매치인원">
@@ -130,5 +144,4 @@ const MatchCreateModal = ({ ...rest }: ModalProps) => {
   );
 };
 
-export { MatchInfoProps };
 export default MatchCreateModal;

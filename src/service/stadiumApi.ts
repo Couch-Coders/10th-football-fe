@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
+import type { CreateStadiumProps } from '@custype/stadiumTypes';
+
 import { apiUrl } from './config';
 
 const stadiumAxios = axios.create({ baseURL: `${apiUrl}/stadiums` });
@@ -12,14 +14,7 @@ stadiumAxios.interceptors.request.use((config: AxiosRequestConfig) => {
   return config;
 });
 
-export const createStadium = (stadiumInfo: {
-  name: string;
-  content: string;
-  parking: boolean;
-  rental: boolean;
-  address: string;
-  imageUrl: string;
-}) => {
+export const createStadium = (stadiumInfo: CreateStadiumProps) => {
   return stadiumAxios.post(``, stadiumInfo);
 };
 

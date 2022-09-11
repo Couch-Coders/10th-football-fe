@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import type { MatchInfo, MatchKeys } from '@custype/matchTypes';
+import type { CreateMatchInfo, MatchKeys } from '@custype/matchTypes';
 
 import { apiUrl } from './config';
 
@@ -20,7 +20,7 @@ matchAxios.interceptors.response.use(
   },
 );
 
-export const createMatch = async (matchInfo: MatchInfo) => {
+export const createMatch = async (matchInfo: CreateMatchInfo) => {
   return await matchAxios.post('', matchInfo);
 };
 

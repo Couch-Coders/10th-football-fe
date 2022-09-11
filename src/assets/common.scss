@@ -1,5 +1,13 @@
 .flex {
     display: flex;
+    &-column{
+        flex-direction: column;
+        &.gap-1 {
+            >*:not(:nth-child(1)) {
+                margin-top: 1rem;
+            }
+        }
+    }
 }
 
 .mr-1 {
