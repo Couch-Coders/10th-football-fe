@@ -8,67 +8,14 @@ import { useAppDispatch, useAppSelector } from '@app/store';
 import Button from '@components/button';
 import SimpleCard from '@components/card/simpleCard';
 import BaseModal from '@components/modal';
-import { ErrorToast } from '@components/toasts';
+import { ErrorToast, SuccessToast } from '@components/toasts';
 import { AppliedMatchInfoProps } from '@custype/stadiumTypes';
 import { getAppliedMatchListBySelf } from '@redux/userSlice';
-import { createReviewBySelfApi } from '@service/reviewApi';
 import {
-  getAppliedMatchListBySelfApi,
-  getSelfReviewApi,
-} from '@service/userApi';
-
-const dummy = [
-  {
-    applicationId: 3,
-    match: {
-      id: 2,
-      stadium: {
-        createdDate: '2022-09-06T15:02:24.206519',
-        lastModifiedDate: '2022-09-06T15:02:24.206519',
-        id: 1,
-        files: [],
-        name: '하늘풋살장',
-        content: '깔끔',
-        parking: true,
-        rental: false,
-        address: '서울특별시 영등포구 1234',
-        likeCount: 0,
-      },
-      matchNum: 1,
-      applicantNum: 1,
-      status: 'CLOSE',
-      gender: 'FEMALE',
-      content: '테스트2222222222222222',
-      startAt: '2022-09-06T17:02:31.548419',
-      rest: 0,
-    },
-  },
-  {
-    applicationId: 4,
-    match: {
-      id: 5,
-      stadium: {
-        createdDate: '2022-09-06T15:02:26.630725',
-        lastModifiedDate: '2022-09-06T15:02:26.630725',
-        id: 2,
-        files: [],
-        name: '옥상풋살장',
-        content: '더러움',
-        parking: true,
-        rental: false,
-        address: '서울특별시 구로구 3333',
-        likeCount: 0,
-      },
-      matchNum: 10,
-      applicantNum: 1,
-      status: 'OPEN',
-      gender: 'ALL',
-      content: '테스트55555555555555',
-      startAt: '2022-09-09T21:02:34.485174',
-      rest: 9,
-    },
-  },
-];
+  createReviewBySelfApi,
+  deleteReviewBySelfApi,
+} from '@service/reviewApi';
+import { getSelfReviewApi } from '@service/userApi';
 
 const Container = styled.div`
   width: 100%;
@@ -91,9 +38,11 @@ const UserMyPage = () => {
   const navigate = useNavigate();
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectReviewInfo, setSelectedReviewInfo] = useState<{
+    id: number;
     matchId: number;
     content: string;
   }>({
+    id: 0,
     matchId: 0,
     content: '',
   });
@@ -102,11 +51,11 @@ const UserMyPage = () => {
     void getAppliedMatchList();
   }, []);
 
-  useEffect(() => {
-    if (!isReviewModalOpen && selectReviewInfo.matchId !== 0) {
-      setIsReviewModalOpen(true);
-    }
-  }, [selectReviewInfo.matchId]);
+  // useEffect(() => {
+  //   if (!isReviewModalOpen && selectReviewInfo.matchId !== 0) {
+  //     setIsReviewModalOpen(true);
+  //   }
+  // }, [selectReviewInfo.matchId]);
 
   const getAppliedMatchList = async () => {
     // {}: paginationProps 정보가 들어가야 한다.
@@ -118,8 +67,9 @@ const UserMyPage = () => {
       const res = await getSelfReviewApi(matchId);
       setSelectedReviewInfo({
         matchId,
-        content: res.data,
+        ...res.data,
       });
+      setIsReviewModalOpen(true);
     } catch (error) {
       if (error instanceof AxiosError) {
         ErrorToast(error.message);
@@ -131,6 +81,10 @@ const UserMyPage = () => {
   };
 
   const createReview = async () => {
+    if (!selectReviewInfo.content) {
+      alert('후기가 입력되지 않았습니다.');
+      return;
+    }
     try {
       await createReviewBySelfApi({
         matchId: selectReviewInfo.matchId,
@@ -147,6 +101,23 @@ const UserMyPage = () => {
     }
   };
 
+  const deleteReview = async () => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      try {
+        await deleteReviewBySelfApi(selectReviewInfo.id);
+        SuccessToast('삭제되었습니다.');
+        setIsReviewModalOpen(false);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          ErrorToast(error.message);
+        } else {
+          ErrorToast();
+          console.error(error);
+        }
+      }
+    }
+  };
+
   return (
     <>
       <BaseModal
@@ -157,7 +128,7 @@ const UserMyPage = () => {
         height="auto"
       >
         <Input.TextArea
-          value={selectReviewInfo.content}
+          value={selectReviewInfo.content ?? ''}
           onChange={(e) =>
             setSelectedReviewInfo({
               ...selectReviewInfo,
@@ -165,7 +136,12 @@ const UserMyPage = () => {
             })
           }
         />
-        <Button onClick={createReview}>저장</Button>
+        <div className="flex-row gap-1 mt-1" style={{ textAlign: 'right' }}>
+          <Button onClick={createReview}>저장</Button>
+          <Button onClick={deleteReview} danger>
+            삭제
+          </Button>
+        </div>
       </BaseModal>
       <Container>
         <SimpleCard title="신청내역" borderRadius size="md">

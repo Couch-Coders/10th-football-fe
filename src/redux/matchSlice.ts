@@ -47,8 +47,16 @@ const matchSlice = createSlice({
   name: 'match',
   initialState,
   reducers: {
-    getMatchInfo: (state, action: PayloadAction<MatchInfoProps>) =>
-      action.payload,
+    getMatchInfo: (
+      state,
+      action: PayloadAction<{ match: any; matchApplicants: any[] }>,
+    ) => {
+      const combinedMatchInfo = {
+        ...action.payload.match,
+        matchApplicants: action.payload.matchApplicants,
+      };
+      return combinedMatchInfo;
+    },
     increaseLikeCount: (state) => {
       state.stadium = {
         ...state.stadium,

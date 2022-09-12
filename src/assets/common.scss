@@ -8,8 +8,20 @@
             }
         }
     }
+    &-row{
+        flex-direction: row;
+        &.gap-1{
+            >*:not(:nth-child(1)) {
+                margin-left: 1rem;
+            }
+        }
+    }
 }
 
 .mr-1 {
     margin-right: 1rem !important;
+}
+
+.mt-1 {
+    margin-top: 1rem !important;
 }

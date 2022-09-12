@@ -70,11 +70,12 @@ const LeftSideDetail = () => {
       }
     }
   };
+  console.log(matchInfo);
   return (
     <Container>
       <Card>
         <MatchRequestCard>
-          <div>{matchInfo.startAt.split('.')[0]}</div>
+          <div>{matchInfo.startAt}</div>
           <div>{matchInfo.stadium.name}</div>
           <div>{matchInfo.stadium.address}</div>
           <Button onClick={applyMatch} disabled={matchInfo.rest === 0}>
