@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getMatch } from '@service/matchApi';
-
 interface MatchInfoProps {
   id: number;
   startAt: string;
