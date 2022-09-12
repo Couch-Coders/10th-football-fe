@@ -21,7 +21,9 @@ interface MatchInfoProps {
   gender: 'MALE' | 'FEMALE' | 'ALL';
   matchNum: 10 | 12 | 18;
   content: string;
-  matchReviews: [{ uid: string; content: string; createdDate: string }];
+  matchReviews: [
+    { uid: string; content: string; createdDate: string; username: string },
+  ];
 }
 
 const initialState: MatchInfoProps = {
@@ -40,7 +42,7 @@ const initialState: MatchInfoProps = {
   matchNum: 10,
   gender: 'MALE',
   content: '',
-  matchReviews: [{ uid: '', content: '', createdDate: '' }],
+  matchReviews: [{ uid: '', content: '', createdDate: '', username: '' }],
 };
 
 const matchSlice = createSlice({
@@ -49,11 +51,16 @@ const matchSlice = createSlice({
   reducers: {
     getMatchInfo: (
       state,
-      action: PayloadAction<{ match: any; matchApplicants: any[] }>,
+      action: PayloadAction<{
+        match: any;
+        matchApplicants: any[];
+        matchReviews: any[];
+      }>,
     ) => {
       const combinedMatchInfo = {
         ...action.payload.match,
         matchApplicants: action.payload.matchApplicants,
+        matchReviews: action.payload.matchReviews,
       };
       return combinedMatchInfo;
     },

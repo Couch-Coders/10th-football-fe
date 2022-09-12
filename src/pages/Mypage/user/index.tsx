@@ -157,7 +157,7 @@ const UserMyPage = () => {
                     <div
                       style={{ cursor: 'pointer' }}
                       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                      onClick={() => navigate(`/${item.match.id ?? ''}`)}
+                      onClick={() => navigate(`/detail/${item.match.id ?? ''}`)}
                     >
                       자세히 보러가기...
                     </div>

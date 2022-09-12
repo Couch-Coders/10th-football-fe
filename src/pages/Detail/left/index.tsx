@@ -70,7 +70,6 @@ const LeftSideDetail = () => {
       }
     }
   };
-  console.log(matchInfo);
   return (
     <Container>
       <Card>
