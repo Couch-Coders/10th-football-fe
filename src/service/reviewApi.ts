@@ -26,7 +26,7 @@ export const createReviewBySelfApi = (reviewInfo: {
 };
 
 export const getReviewListApi = (pageInfo: PaginationProps) => {
-  return axios
+  return reviewAxios
     .get(``, {
       params: pageInfo,
     })
@@ -35,5 +35,5 @@ export const getReviewListApi = (pageInfo: PaginationProps) => {
 };
 
 export const deleteReviewBySelfApi = (reviewId: number) => {
-  return axios.delete(`/${reviewId}`);
+  return reviewAxios.delete(`/${reviewId}`);
 };

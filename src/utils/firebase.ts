@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -23,6 +24,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const firebaseStorage = getStorage(app);
 // Google 제공업체 객체의 인스턴스를 생성합니다.
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
@@ -35,3 +37,4 @@ export const signInWithGoogle = async () => {
 };
 
 export const signOutGoogle = async () => await signOut(auth);
+export { app, firebaseStorage };

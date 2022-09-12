@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getMatch } from '@service/matchApi';
-
 interface MatchInfoProps {
   id: number;
   startAt: string;
@@ -12,6 +10,7 @@ interface MatchInfoProps {
     likeCount: number;
     parking: boolean;
     rental: boolean;
+    files: Array<{ id: number; imageUrl: string }>;
   };
   matchApplicants: Array<{
     uid: number | string;
@@ -21,7 +20,14 @@ interface MatchInfoProps {
   gender: 'MALE' | 'FEMALE' | 'ALL';
   matchNum: 10 | 12 | 18;
   content: string;
-  matchReviews: [{ uid: string; content: string; createdDate: string }];
+  matchReviews: Array<{
+    uid: string;
+    content: string;
+    createdDate: string;
+    username: string;
+  }>;
+  likeStatus?: boolean;
+  applyStatus?: boolean;
 }
 
 const initialState: MatchInfoProps = {
@@ -34,32 +40,53 @@ const initialState: MatchInfoProps = {
     likeCount: 0,
     parking: false,
     rental: false,
+    files: [],
   },
   matchApplicants: [{ uid: '', username: '' }],
   rest: 0,
   matchNum: 10,
   gender: 'MALE',
   content: '',
-  matchReviews: [{ uid: '', content: '', createdDate: '' }],
+  matchReviews: [],
+  likeStatus: false,
 };
 
 const matchSlice = createSlice({
   name: 'match',
   initialState,
   reducers: {
-    getMatchInfo: (state, action: PayloadAction<MatchInfoProps>) =>
-      action.payload,
+    getMatchInfo: (
+      state,
+      action: PayloadAction<{
+        match: any;
+        matchApplicants: any[];
+        matchReviews: any[];
+        likeStatus: boolean;
+        applyStatus: boolean;
+      }>,
+    ) => {
+      const combinedMatchInfo = {
+        ...action.payload.match,
+        matchApplicants: action.payload.matchApplicants,
+        matchReviews: action.payload.matchReviews,
+        likeStatus: action.payload.likeStatus,
+        applyStatus: action.payload.applyStatus,
+      };
+      return combinedMatchInfo;
+    },
     increaseLikeCount: (state) => {
       state.stadium = {
         ...state.stadium,
         likeCount: state.stadium.likeCount + 1,
       };
+      state.likeStatus = true;
     },
     decreaseLikeCount: (state) => {
       state.stadium = {
         ...state.stadium,
         likeCount: state.stadium.likeCount - 1,
       };
+      state.likeStatus = false;
     },
   },
 });

@@ -6,6 +6,7 @@ import React from 'react';
 import Button from '@components/button';
 import { ErrorToast, SuccessToast } from '@components/toasts';
 import { MatchListProps as MatchListData } from '@custype/matchTypes';
+import { StadiumListProps } from '@custype/stadiumTypes';
 import { deleteMatchByAdminApi, getMatchesApi } from '@service/matchApi';
 import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 
@@ -14,12 +15,14 @@ interface MatchListProps {
   onClick: React.MouseEventHandler<HTMLElement>;
   patchDelete?: boolean;
   deleteMatchCallback?: (d: number) => void;
+  onClickForUpdate?: (matchId: number) => void;
 }
 
 const MatchList = ({
   onClick,
   patchDelete,
   deleteMatchCallback,
+  onClickForUpdate,
   ...rest
 }: MatchListProps) => {
   const deleteMatch = async (matchId: number) => {
@@ -64,7 +67,7 @@ const MatchList = ({
             <span>
               <Button
                 style={{ marginRight: '1rem' }}
-                onClick={() => alert('서비스 준비중입니다.')}
+                onClick={() => onClickForUpdate?.(item.id)}
               >
                 수정
               </Button>
