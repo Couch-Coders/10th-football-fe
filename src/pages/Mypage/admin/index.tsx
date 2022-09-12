@@ -8,10 +8,14 @@ import styled from 'styled-components';
 import Button from '@components/button';
 import ListComponent from '@components/matchList';
 import { ErrorToast, SuccessToast } from '@components/toasts';
-import { MatchListProps } from '@custype/matchTypes';
+import { CreateMatchInfo, MatchListProps } from '@custype/matchTypes';
 import { StadiumListProps } from '@custype/stadiumTypes';
 import { apiUrl } from '@service/config';
-import { deleteMatchByAdminApi, getMatchesApi } from '@service/matchApi';
+import {
+  deleteMatchByAdminApi,
+  getMatch,
+  getMatchesApi,
+} from '@service/matchApi';
 import { deleteStadiumApi, getAllStadiumApi } from '@service/stadiumApi';
 
 import MatchCreateModal from './matchCreateModal';
@@ -43,11 +47,25 @@ const AdminMyPage = () => {
   const [matchList, setMatchList] = useState<MatchListProps[]>([]);
   const [stadiumList, setStadiumList] = useState<StadiumListProps[]>([]);
   const [date, setDate] = useState(moment());
+  const [matchInfoForUpdate, setMatchInfoForUpdate] = useState<{
+    matchInfo: CreateMatchInfo;
+    matchId: number;
+  } | null>();
 
   useEffect(() => {
     void getAllMatchList();
     void getAllStadium();
   }, []);
+
+  useEffect(() => {
+    if (matchInfoForUpdate) {
+      setIsMatchModalOpen(true);
+    }
+  }, [matchInfoForUpdate]);
+
+  useEffect(() => {
+    if (!isMatchModalOpen) setMatchInfoForUpdate(null);
+  }, [isMatchModalOpen, isStadiumModalOpen]);
 
   const getAllMatchList = async (
     matchDay: string = moment().format('YYYY-MM-DD'),
@@ -93,6 +111,23 @@ const AdminMyPage = () => {
     }
   };
 
+  const onClickForUpdate = async (matchId: number) => {
+    const res = await getMatch(matchId);
+    const { match } = res;
+
+    // refactor getMatchApi return Data type 명시하기
+    setMatchInfoForUpdate({
+      matchId: match.id,
+      matchInfo: {
+        stadiumId: match.stadium.id,
+        matchNum: match.matchNum,
+        matchGender: match.gender.toLowerCase(),
+        content: match.content,
+        startAt: match.startAt.replace('T', ' '),
+      },
+    });
+  };
+
   return (
     <>
       <MatchCreateModal
@@ -100,6 +135,7 @@ const AdminMyPage = () => {
         onOk={() => setIsMatchModalOpen(true)}
         onCancel={() => setIsMatchModalOpen(false)}
         header="경기 생성"
+        matchInfoForUpdate={matchInfoForUpdate}
       />
       <StadiumCreateModal
         visible={isStadiumModalOpen}
@@ -123,6 +159,7 @@ const AdminMyPage = () => {
           onClick={() => {}}
           dataSource={matchList}
           deleteMatchCallback={deleteMatchCallback}
+          onClickForUpdate={onClickForUpdate}
         />
       </ListContainer>
       <ListContainer>
@@ -135,7 +172,9 @@ const AdminMyPage = () => {
               <div style={{ width: '10%' }}>{item.id}</div>
               <div style={{ width: '40%' }}>{item.address}</div>
               <div style={{ width: '20%' }}>{item.name}</div>
-              <Button onClick={() => {}}>수정</Button>
+              <Button onClick={() => alert('서비스 준비중입니다.')}>
+                수정
+              </Button>
               <Button onClick={() => deleteStadium(item.id)} danger>
                 삭제
               </Button>

@@ -28,11 +28,12 @@ interface InputFormProps {
 interface InputSectionProps {
   children?: React.ReactNode;
   header: string;
+  className?: string;
 }
 
-const Section = ({ children, header }: InputSectionProps) => {
+const Section = ({ children, header, ...rest }: InputSectionProps) => {
   return (
-    <InputSectionContainer>
+    <InputSectionContainer {...rest}>
       <header>{header}</header>
       {children}
     </InputSectionContainer>

@@ -1,6 +1,7 @@
 import { DatePicker, Input } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { AxiosError } from 'axios';
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 
 import Button from '@components/button';
@@ -9,18 +10,24 @@ import Modal from '@components/modal';
 import type { ModalProps } from '@components/modal';
 import RadioGroup from '@components/radioGroup';
 import Search from '@components/search';
+import { ErrorToast } from '@components/toasts';
 import type { CreateMatchInfo } from '@custype/matchTypes';
-import { createMatch } from '@service/matchApi';
+import { createMatch, updateMatchApi } from '@service/matchApi';
 import { getStadiumList } from '@service/stadiumApi';
 
 import 'moment/locale/ko';
 
 interface MatchCreateModalProps extends ModalProps {
-  matchInfoForPatch?: CreateMatchInfo;
+  matchInfoForUpdate?: {
+    matchInfo: CreateMatchInfo;
+    matchId: number;
+  } | null;
+  matchId?: number;
 }
 
 const MatchCreateModal = ({
-  matchInfoForPatch,
+  matchInfoForUpdate,
+  matchId,
   ...rest
 }: MatchCreateModalProps) => {
   const [matchInfo, setMatchInfo] = useState<CreateMatchInfo>({
@@ -32,12 +39,18 @@ const MatchCreateModal = ({
   });
 
   useEffect(() => {
-    if (matchInfoForPatch) setMatchInfo(matchInfoForPatch);
-  }, []);
+    setMatchInfo(
+      matchInfoForUpdate?.matchInfo ?? {
+        startAt: '',
+        stadiumId: 0,
+        matchGender: '',
+        content: '',
+        matchNum: 0,
+      },
+    );
+  }, [matchInfoForUpdate?.matchId]);
 
   useEffect(() => {
-    // Question componentwillunmount 생명주기 방법?
-    // 현업에서는 어떻게 사용하는지 궁금합니다.
     return function cleanup() {
       if (rest.visible) {
         setMatchInfo({
@@ -52,16 +65,18 @@ const MatchCreateModal = ({
   }, [rest.visible]);
 
   const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-    setMatchInfo({
-      ...matchInfo,
-      startAt: dateString,
-    });
+    if (date) {
+      setMatchInfo({
+        ...matchInfo,
+        startAt: date?.format('YYYY-MM-DD HH:mm:ss'),
+      });
+    }
   };
 
-  const createAction = async () => {
+  const createAction = async (type: string) => {
     const { startAt, stadiumId, matchGender, matchNum } = matchInfo;
     if (!startAt || !stadiumId || !matchGender || !matchNum) {
-      console.log('입력되지 않은 필드가 있습니다.');
+      ErrorToast('입력되지 않은 필드가 있습니다.');
       return;
     }
 
@@ -75,7 +90,13 @@ const MatchCreateModal = ({
           : tempMatchInfo.stadiumId,
     };
     try {
-      await createMatch(tempMatchInfo);
+      if (type === 'update') {
+        if (matchInfoForUpdate) {
+          await updateMatchApi(matchInfoForUpdate.matchId, tempMatchInfo);
+        }
+      } else {
+        await createMatch(tempMatchInfo);
+      }
       rest.onCancel();
       alert('저장되었습니다!');
       location.reload();
@@ -92,9 +113,17 @@ const MatchCreateModal = ({
     <Modal height="auto" {...rest}>
       <InputForm>
         <Section header="경기날짜">
-          <DatePicker showTime onChange={onDateChange} />
+          <DatePicker
+            format={'YYYY-MM-DD HH:mm'}
+            showTime
+            onChange={onDateChange}
+            value={matchInfo.startAt ? moment(matchInfo.startAt) : null}
+          />
         </Section>
-        <Section header="경기장">
+        <Section
+          header="경기장"
+          className={matchInfoForUpdate ? 'display-none' : ''}
+        >
           <Search
             value={matchInfo.stadiumId}
             onChange={(d) => {
@@ -121,7 +150,7 @@ const MatchCreateModal = ({
                 matchGender: e.target.value,
               })
             }
-            value={matchInfo.matchGender}
+            value={matchInfo.matchGender.toLowerCase()}
           />
         </Section>
         <Section header="매치인원">
@@ -148,9 +177,14 @@ const MatchCreateModal = ({
                 content: e.target.value,
               });
             }}
+            value={matchInfo.content}
           />
         </Section>
-        <Button onClick={createAction}>저장</Button>
+        {matchInfoForUpdate ? (
+          <Button onClick={() => createAction('update')}>수정</Button>
+        ) : (
+          <Button onClick={() => createAction('create')}>저장</Button>
+        )}
       </InputForm>
     </Modal>
   );

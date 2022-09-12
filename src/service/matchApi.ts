@@ -51,6 +51,13 @@ export const deleteMatchByAdminApi = (matchId: number) => {
   return matchAxios.delete(`${matchId}`);
 };
 
+export const updateMatchApi = (
+  matchId: number,
+  updateInfo: CreateMatchInfo,
+) => {
+  return matchAxios.patch(`${matchId}`, updateInfo);
+};
+
 // const wrapper = async (
 //   myFunc: Promise<AxiosResponse<any, any>>,
 // ): Promise<any> => {
