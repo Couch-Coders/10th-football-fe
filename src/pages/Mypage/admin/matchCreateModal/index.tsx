@@ -78,6 +78,7 @@ const MatchCreateModal = ({
       await createMatch(tempMatchInfo);
       rest.onCancel();
       alert('저장되었습니다!');
+      location.reload();
     } catch (error) {
       if (error instanceof AxiosError) {
         alert(`저장실패: ${error.message}`);

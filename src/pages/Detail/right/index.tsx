@@ -59,6 +59,7 @@ const Container = styled.div`
 const RightSideDetail = () => {
   const dispatch = useAppDispatch();
   const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
+  const { matchReviews } = matchInfo;
   const likeStateOnChange = async (type: string) => {
     if (!checkUserToken()) {
       alert('로그인 후 이용해 주세요');
@@ -140,15 +141,19 @@ const RightSideDetail = () => {
         {/* <Card title="경기후기">
           {[1, 2, 3].map((applicant, index) => { */}
         <Card title="경기후기" borderRadius>
-          {matchInfo.matchReviews.map((applicant, index) => {
-            return (
-              <Comments
-                key={index}
-                username={applicant.username}
-                content={applicant.content}
-              />
-            );
-          })}
+          {matchReviews.length === 0 ? (
+            <div>후기가 없습니다.</div>
+          ) : (
+            matchReviews.map((applicant, index) => {
+              return (
+                <Comments
+                  key={index}
+                  username={applicant.username}
+                  content={applicant.content}
+                />
+              );
+            })
+          )}
         </Card>
       </section>
     </Container>

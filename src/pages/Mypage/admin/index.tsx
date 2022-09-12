@@ -27,6 +27,7 @@ const ListContainer = styled.section`
   > header {
     font-size: 1.5rem;
     margin-top: 50px;
+    font-weight: bold;
   }
   > div:nth-child(2) {
     margin-top: 20px;

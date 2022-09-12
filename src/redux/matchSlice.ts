@@ -12,6 +12,7 @@ interface MatchInfoProps {
     likeCount: number;
     parking: boolean;
     rental: boolean;
+    files: Array<{ id: number; imageUrl: string }>;
   };
   matchApplicants: Array<{
     uid: number | string;
@@ -21,9 +22,12 @@ interface MatchInfoProps {
   gender: 'MALE' | 'FEMALE' | 'ALL';
   matchNum: 10 | 12 | 18;
   content: string;
-  matchReviews: [
-    { uid: string; content: string; createdDate: string; username: string },
-  ];
+  matchReviews: Array<{
+    uid: string;
+    content: string;
+    createdDate: string;
+    username: string;
+  }>;
 }
 
 const initialState: MatchInfoProps = {
@@ -36,13 +40,14 @@ const initialState: MatchInfoProps = {
     likeCount: 0,
     parking: false,
     rental: false,
+    files: [],
   },
   matchApplicants: [{ uid: '', username: '' }],
   rest: 0,
   matchNum: 10,
   gender: 'MALE',
   content: '',
-  matchReviews: [{ uid: '', content: '', createdDate: '', username: '' }],
+  matchReviews: [],
 };
 
 const matchSlice = createSlice({

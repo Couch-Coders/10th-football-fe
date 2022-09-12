@@ -50,6 +50,7 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
         ...stadiumInfo,
         files: res.data,
       });
+      SuccessToast('등록되었습니다!');
     } catch (error) {
       if (error instanceof AxiosError) {
         ErrorToast(error.message);
@@ -68,8 +69,8 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
     }
     try {
       const res = await createStadiumApi(stadiumInfo);
-      SuccessToast('경기생성 성공!');
-      rest.onCancel();
+      alert('경기생성 성공!');
+      location.reload();
     } catch (error) {
       if (error instanceof AxiosError) {
         ErrorToast(error.message);
@@ -131,7 +132,7 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
             }
           />
           <Button onClick={fileUploads} disabled={!imgFormData}>
-            파일 등록
+            {stadiumInfo.files.length !== 0 ? '등록완료' : '파일등록'}
           </Button>
         </Section>
         <Button onClick={createStadium}>저장</Button>
