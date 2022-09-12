@@ -72,35 +72,37 @@ const Detail = () => {
   };
   return (
     <CommonLayout>
-      <section style={{ height: '450px' }}>
-        {loading ? (
-          <Loader />
-        ) : (
-          <Carousel>
-            {stadiumImgUrl.map((url, index) => {
-              return (
-                <div
-                  key={`imgUrl_${index}`}
-                  style={{ width: '100%', height: '450px' }}
-                >
-                  <img
-                    width="100%"
-                    height="100%"
-                    src={url}
-                    className="object-fit-cover"
-                  />
-                </div>
-              );
-            })}
-          </Carousel>
-        )}
-      </section>
-      <section>
-        <Container>
-          <LeftSideDetail />
-          <RightSideDetail />
-        </Container>
-      </section>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <section style={{ height: '450px' }}>
+            <Carousel>
+              {stadiumImgUrl.map((url, index) => {
+                return (
+                  <div
+                    key={`imgUrl_${index}`}
+                    style={{ width: '100%', height: '450px' }}
+                  >
+                    <img
+                      width="100%"
+                      height="100%"
+                      src={url}
+                      className="object-fit-cover"
+                    />
+                  </div>
+                );
+              })}
+            </Carousel>
+          </section>
+          <section>
+            <Container>
+              <LeftSideDetail />
+              <RightSideDetail />
+            </Container>
+          </section>
+        </>
+      )}
     </CommonLayout>
   );
 };

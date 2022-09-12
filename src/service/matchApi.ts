@@ -47,6 +47,10 @@ export const applyMatchApi = (matchId: number) => {
   return matchAxios.post(`applications/${matchId}`);
 };
 
+export const retractMatchApi = (matchId: number) => {
+  return matchAxios.delete(`applications/${matchId}`);
+};
+
 export const deleteMatchByAdminApi = (matchId: number) => {
   return matchAxios.delete(`${matchId}`);
 };

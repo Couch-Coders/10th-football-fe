@@ -59,7 +59,7 @@ const Container = styled.div`
 const RightSideDetail = () => {
   const dispatch = useAppDispatch();
   const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
-  const { matchReviews } = matchInfo;
+  const { matchReviews, likeStatus } = matchInfo;
   const likeStateOnChange = async (type: string) => {
     if (!checkUserToken()) {
       alert('로그인 후 이용해 주세요');
@@ -71,8 +71,10 @@ const RightSideDetail = () => {
         res = await increaseLikeCountApi(matchInfo.stadium.id);
         dispatch(increaseLikeCount());
       } else {
-        res = await decreaseLikeCountApi(matchInfo.stadium.id);
-        dispatch(decreaseLikeCount());
+        if (window.confirm('경기장 좋아요를 취소하시겠습니까?')) {
+          res = await decreaseLikeCountApi(matchInfo.stadium.id);
+          dispatch(decreaseLikeCount());
+        }
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -89,7 +91,7 @@ const RightSideDetail = () => {
         <span>
           {
             // eslint-disable-next-line no-constant-condition
-            true ? (
+            !likeStatus ? (
               <LikeOutlined
                 style={{ cursor: 'pointer' }}
                 onClick={() => likeStateOnChange('like')}

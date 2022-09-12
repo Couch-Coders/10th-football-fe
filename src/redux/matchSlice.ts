@@ -26,6 +26,8 @@ interface MatchInfoProps {
     createdDate: string;
     username: string;
   }>;
+  likeStatus?: boolean;
+  applyStatus?: boolean;
 }
 
 const initialState: MatchInfoProps = {
@@ -46,6 +48,7 @@ const initialState: MatchInfoProps = {
   gender: 'MALE',
   content: '',
   matchReviews: [],
+  likeStatus: false,
 };
 
 const matchSlice = createSlice({
@@ -58,12 +61,16 @@ const matchSlice = createSlice({
         match: any;
         matchApplicants: any[];
         matchReviews: any[];
+        likeStatus: boolean;
+        applyStatus: boolean;
       }>,
     ) => {
       const combinedMatchInfo = {
         ...action.payload.match,
         matchApplicants: action.payload.matchApplicants,
         matchReviews: action.payload.matchReviews,
+        likeStatus: action.payload.likeStatus,
+        applyStatus: action.payload.applyStatus,
       };
       return combinedMatchInfo;
     },
@@ -72,12 +79,14 @@ const matchSlice = createSlice({
         ...state.stadium,
         likeCount: state.stadium.likeCount + 1,
       };
+      state.likeStatus = true;
     },
     decreaseLikeCount: (state) => {
       state.stadium = {
         ...state.stadium,
         likeCount: state.stadium.likeCount - 1,
       };
+      state.likeStatus = false;
     },
   },
 });
