@@ -52,6 +52,15 @@ const UserMyPage = () => {
     void getAppliedMatchList();
   }, []);
 
+  // hacky way
+  // 후기를 작성하지 않은 경우 content=null;
+  // 따라서 정책상 후기를 작성했다면 수정은 불가하기 때문에 content=null일 경우 저장버튼을 보여주지 않음
+  useEffect(() => {
+    if (!isReviewModalOpen) {
+      setIsSavePossible(false);
+    }
+  }, [isReviewModalOpen]);
+
   // useEffect(() => {
   //   if (!isReviewModalOpen && selectReviewInfo.matchId !== 0) {
   //     setIsReviewModalOpen(true);
@@ -70,6 +79,7 @@ const UserMyPage = () => {
         matchId,
         ...res.data,
       });
+      if (res.data.content === null) setIsSavePossible(true);
       setIsReviewModalOpen(true);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -138,9 +148,7 @@ const UserMyPage = () => {
           }
         />
         <div className="flex-row gap-1 mt-1" style={{ textAlign: 'right' }}>
-          {selectReviewInfo.content !== null && (
-            <Button onClick={createReview}>저장</Button>
-          )}
+          {isSavePossible && <Button onClick={createReview}>저장</Button>}
           <Button onClick={deleteReview} danger>
             삭제
           </Button>
