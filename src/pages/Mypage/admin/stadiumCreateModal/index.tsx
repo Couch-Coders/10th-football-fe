@@ -1,14 +1,18 @@
 import { Input } from 'antd';
+import { AxiosError } from 'axios';
 import React, { useState } from 'react';
 
+import Button from '@components/button';
 import Checkbox from '@components/checkboxGroup';
 import InputForm, { Section } from '@components/inputForm';
 import Modal from '@components/modal';
 import type { ModalProps } from '@components/modal';
+import { ErrorToast, SuccessToast } from '@components/toasts';
 import type { CreateStadiumProps } from '@custype/stadiumTypes';
+import { saveFileInFirebaseStorageByAdminApi } from '@service/filesApi';
+import { createStadiumApi } from '@service/stadiumApi';
 
 const { TextArea } = Input;
-const formData = new FormData();
 
 const StadiumCreateModal = ({ ...rest }: ModalProps) => {
   const [stadiumInfo, setStadiumInfo] = useState<CreateStadiumProps>({
@@ -17,8 +21,9 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
     parking: false,
     rental: false,
     address: '',
-    imageUrl: '',
+    files: [],
   });
+  const [imgFormData, setImgFormData] = useState<FormData | null>(null);
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -29,6 +34,52 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
     });
   };
 
+  const onChangeImgFormData = (files: FileList | null) => {
+    if (!files) return;
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+    setImgFormData(formData);
+  };
+  const fileUploads = async () => {
+    if (!imgFormData) return;
+    try {
+      const res = await saveFileInFirebaseStorageByAdminApi(imgFormData);
+      setStadiumInfo({
+        ...stadiumInfo,
+        files: res.data,
+      });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        ErrorToast(error.message);
+      } else {
+        console.error(error);
+        ErrorToast();
+      }
+    }
+  };
+
+  const createStadium = async () => {
+    const { address, content, files, name } = stadiumInfo;
+    if (!address || !content || !name) {
+      ErrorToast('작성하지 않으신 부분이 있습니다. 확인 후 다시 시도해주세요.');
+      return;
+    }
+    try {
+      const res = await createStadiumApi(stadiumInfo);
+      SuccessToast('경기생성 성공!');
+      rest.onCancel();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        ErrorToast(error.message);
+      } else {
+        console.error(error);
+        ErrorToast();
+      }
+    }
+  };
+
   return (
     <Modal height="auto" {...rest}>
       <InputForm>
@@ -36,6 +87,13 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
           <Input
             name="address"
             placeholder="경기장 주소를 입력하세요"
+            onChange={onChange}
+          />
+        </Section>
+        <Section header="경기장 이름">
+          <Input
+            name="name"
+            placeholder="경기장 이름을 입력하세요"
             onChange={onChange}
           />
         </Section>
@@ -63,20 +121,20 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
         <Section header="경기장 사진 등록">
           <input
             type="file"
-            multiple={true}
+            multiple
             accept="image/png, image/gif, image/jpeg"
             // Question
             // image따위의 파일들은 FormData을 통해 서버에 보내야 한다.
             // 보내는 방법
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              if (e.target.files?.[0]) {
-                const data = new FormData();
-                data.append('test', e.target.files[0]);
-                console.log(data);
-              }
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onChangeImgFormData(e.target.files)
+            }
           />
+          <Button onClick={fileUploads} disabled={!imgFormData}>
+            파일 등록
+          </Button>
         </Section>
+        <Button onClick={createStadium}>저장</Button>
       </InputForm>
     </Modal>
   );

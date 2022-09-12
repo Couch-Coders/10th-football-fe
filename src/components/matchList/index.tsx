@@ -6,6 +6,7 @@ import React from 'react';
 import Button from '@components/button';
 import { ErrorToast, SuccessToast } from '@components/toasts';
 import { MatchListProps as MatchListData } from '@custype/matchTypes';
+import { StadiumListProps } from '@custype/stadiumTypes';
 import { deleteMatchByAdminApi, getMatchesApi } from '@service/matchApi';
 import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 

@@ -13,8 +13,14 @@ stadiumAxios.interceptors.request.use((config: AxiosRequestConfig) => {
   };
   return config;
 });
+stadiumAxios.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
-export const createStadium = (stadiumInfo: CreateStadiumProps) => {
+export const createStadiumApi = (stadiumInfo: CreateStadiumProps) => {
   return stadiumAxios.post(``, stadiumInfo);
 };
 
@@ -24,4 +30,12 @@ export const getStadiumList = (address: string) => {
       address,
     },
   });
+};
+
+export const getAllStadiumApi = () => {
+  return stadiumAxios.get(`all`).then((res) => res.data);
+};
+
+export const deleteStadiumApi = (stadiumId: number) => {
+  return stadiumAxios.delete(`${stadiumId}`);
 };

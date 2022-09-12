@@ -4,7 +4,7 @@ interface CreateStadiumProps {
   parking: boolean;
   rental: boolean;
   address: string;
-  imageUrl: string;
+  files: any[];
 }
 
 interface AppliedMatchInfoProps {
@@ -20,4 +20,13 @@ interface AppliedMatchInfoProps {
   };
 }
 
-export type { CreateStadiumProps, AppliedMatchInfoProps };
+interface StadiumListProps {
+  id: number;
+  name: string;
+  content: string;
+  parking: boolean;
+  rental: boolean;
+  address: string;
+}
+
+export type { CreateStadiumProps, AppliedMatchInfoProps, StadiumListProps };

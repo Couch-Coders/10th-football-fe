@@ -46,6 +46,7 @@ const UserMyPage = () => {
     matchId: 0,
     content: '',
   });
+  const [isSavePossible, setIsSavePossible] = useState(false);
 
   useEffect(() => {
     void getAppliedMatchList();
@@ -137,7 +138,9 @@ const UserMyPage = () => {
           }
         />
         <div className="flex-row gap-1 mt-1" style={{ textAlign: 'right' }}>
-          <Button onClick={createReview}>저장</Button>
+          {selectReviewInfo.content !== null && (
+            <Button onClick={createReview}>저장</Button>
+          )}
           <Button onClick={deleteReview} danger>
             삭제
           </Button>
