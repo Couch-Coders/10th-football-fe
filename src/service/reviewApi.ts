@@ -1,14 +1,18 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 import type { PaginationProps } from '@custype/matchTypes';
+import { checkUserToken } from '@utils/user';
 
 import { apiUrl } from './config';
 
 const reviewAxios = axios.create({ baseURL: `${apiUrl}/reviews` });
 reviewAxios.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.headers = {
-    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
-  };
+  if (checkUserToken()) {
+    config.headers = {
+      Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+    };
+    return config;
+  }
   return config;
 });
 reviewAxios.interceptors.response.use(

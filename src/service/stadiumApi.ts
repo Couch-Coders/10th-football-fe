@@ -1,16 +1,18 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 import type { CreateStadiumProps } from '@custype/stadiumTypes';
+import { checkUserToken } from '@utils/user';
 
 import { apiUrl } from './config';
 
 const stadiumAxios = axios.create({ baseURL: `${apiUrl}/stadiums` });
 stadiumAxios.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.headers = {
-    // localStorage.getItem('token') ?? ''
-    // => localstorage.getItem('token')!==(null || undefined) ? localstorage.getItem('token') : ''
-    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
-  };
+  if (checkUserToken()) {
+    config.headers = {
+      Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+    };
+    return config;
+  }
   return config;
 });
 stadiumAxios.interceptors.response.use(
