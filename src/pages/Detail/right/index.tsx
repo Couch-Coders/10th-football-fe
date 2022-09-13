@@ -1,3 +1,4 @@
+/* global kakao */
 import {
   LikeOutlined,
   LikeFilled,
@@ -5,7 +6,7 @@ import {
   SkinOutlined,
 } from '@ant-design/icons';
 import { AxiosError } from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '@app/store';
@@ -20,6 +21,8 @@ import {
 import { decreaseLikeCountApi, increaseLikeCountApi } from '@service/likesApi';
 import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 import { checkUserToken } from '@utils/user';
+
+const { kakao } = window;
 
 const Container = styled.div`
   width: 100%;
@@ -60,6 +63,9 @@ const RightSideDetail = () => {
   const dispatch = useAppDispatch();
   const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
   const { matchReviews, likeStatus } = matchInfo;
+  useEffect(() => {
+    console.log(kakao);
+  }, []);
   const likeStateOnChange = async (type: string) => {
     if (!checkUserToken()) {
       alert('로그인 후 이용해 주세요');

@@ -124,9 +124,6 @@ const StadiumCreateModal = ({ ...rest }: ModalProps) => {
             type="file"
             multiple
             accept="image/png, image/gif, image/jpeg"
-            // Question
-            // image따위의 파일들은 FormData을 통해 서버에 보내야 한다.
-            // 보내는 방법
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               onChangeImgFormData(e.target.files)
             }
