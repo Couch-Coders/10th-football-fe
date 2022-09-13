@@ -12,6 +12,7 @@ import { applyMatchApi, retractMatchApi } from '@service/matchApi';
 import { checkUserToken } from '@utils/user';
 
 const Container = styled.div`
+  width: 220px;
   > *:nth-child(2) {
     margin-top: 20px;
   }
@@ -119,10 +120,10 @@ const LeftSideDetail = () => {
       {checkUserToken() && user.profile.role === 'ADMIN' && (
         <Card>
           <ApplicantsContainer>
-            {matchInfo.matchApplicants.map((applicant) => {
+            {matchInfo.matchApplicants.map((applicant, index) => {
               return (
-                <Tag key={`badge_${applicant.uid}`}>
-                  {`${applicant.username}(${applicant.uid})`}
+                <Tag key={`badge_${index}`}>
+                  {`${applicant.username} (${applicant.phone})`}
                 </Tag>
               );
             })}

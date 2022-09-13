@@ -13,6 +13,7 @@ interface MatchInfoProps {
     files: Array<{ id: number; imageUrl: string }>;
   };
   matchApplicants: Array<{
+    [key: string]: any;
     uid: number | string;
     username: string;
   }>;

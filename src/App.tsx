@@ -35,6 +35,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/detail/:matchId" element={<Detail />} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/test/test2" element={<div>hello world</div>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
