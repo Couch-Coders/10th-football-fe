@@ -22,7 +22,7 @@ userAxios.interceptors.response.use(
     if (
       error.response &&
       error.response.status === 401 &&
-      error.response.data === '해당 회원이 존재하지 않습니다'
+      error.response.data === '해당 회원이 존재하지 않습니다.'
     ) {
       // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject('NEW_USER');
