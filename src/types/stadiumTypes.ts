@@ -20,13 +20,8 @@ interface AppliedMatchInfoProps {
   };
 }
 
-interface StadiumListProps {
+interface StadiumListProps extends CreateStadiumProps {
   id: number;
-  name: string;
-  content: string;
-  parking: boolean;
-  rental: boolean;
-  address: string;
 }
 
 export type { CreateStadiumProps, AppliedMatchInfoProps, StadiumListProps };
