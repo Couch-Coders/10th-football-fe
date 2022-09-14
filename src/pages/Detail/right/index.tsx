@@ -1,3 +1,4 @@
+/* global kakao */
 import {
   LikeOutlined,
   LikeFilled,
@@ -5,7 +6,7 @@ import {
   SkinOutlined,
 } from '@ant-design/icons';
 import { AxiosError } from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '@app/store';
@@ -20,6 +21,8 @@ import {
 import { decreaseLikeCountApi, increaseLikeCountApi } from '@service/likesApi';
 import { GENDER_TO_KOR, MATCH_NUM_TO_STRING } from '@utils/parse';
 import { checkUserToken } from '@utils/user';
+
+const { kakao } = window;
 
 const Container = styled.div`
   width: 100%;
@@ -48,10 +51,9 @@ const Container = styled.div`
         padding-bottom: 10px;
       }
     }
-    &.map {
+    &.map-container {
       width: 100%;
       height: 360px;
-      border: 1px solid black;
     }
   }
 `;
@@ -60,6 +62,22 @@ const RightSideDetail = () => {
   const dispatch = useAppDispatch();
   const matchInfo = useAppSelector<MatchInfoProps>((state) => state.match);
   const { matchReviews, likeStatus } = matchInfo;
+  useEffect(() => {
+    const container = document.getElementById('map');
+    const options = {
+      center: new kakao.maps.LatLng(37.56462664995, 127.02878456871),
+      level: 3,
+    };
+    const map = new kakao.maps.Map(container, options);
+    const markerPosition = new kakao.maps.LatLng(
+      37.56462664995,
+      127.02878456871,
+    );
+    const marker = new kakao.maps.Marker({
+      position: markerPosition,
+    });
+    marker.setMap(map);
+  }, []);
   const likeStateOnChange = async (type: string) => {
     if (!checkUserToken()) {
       alert('로그인 후 이용해 주세요');
@@ -138,7 +156,9 @@ const RightSideDetail = () => {
           {matchInfo.content}
         </Card>
       </section>
-      <section className="map">지도</section>
+      <section className="map-container">
+        <div id="map" style={{ width: '100%', height: '100%' }}></div>
+      </section>
       <section>
         {/* <Card title="경기후기">
           {[1, 2, 3].map((applicant, index) => { */}

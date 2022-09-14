@@ -1,4 +1,12 @@
-declare module '*.jpg' {
-  const value: string;
-  export default value;
+declare global {
+  interface Window {
+    kakao: any;
+  }
 }
+
+declare module '*.jpg' {
+  const value: any;
+  export = value;
+}
+
+export {};

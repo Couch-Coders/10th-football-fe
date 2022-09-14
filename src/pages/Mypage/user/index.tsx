@@ -175,7 +175,7 @@ const UserMyPage = () => {
                   </div>
                   <Button
                     onClick={() => getMatchReview(item.match.id)}
-                    disabled={item.match.status === 'CLOSE'}
+                    disabled={item.match.status === 'OPEN'}
                   >
                     후기
                   </Button>

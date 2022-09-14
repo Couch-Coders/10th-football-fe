@@ -1,16 +1,18 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import type { CreateMatchInfo, MatchKeys } from '@custype/matchTypes';
+import { checkUserToken } from '@utils/user';
 
 import { apiUrl } from './config';
 
 const matchAxios = axios.create({ baseURL: `${apiUrl}/matches` });
 matchAxios.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.headers = {
-    // localStorage.getItem('token') ?? ''
-    // => localstorage.getItem('token')!==(null || undefined) ? localstorage.getItem('token') : ''
-    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
-  };
+  if (checkUserToken()) {
+    config.headers = {
+      Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+    };
+    return config;
+  }
   return config;
 });
 matchAxios.interceptors.response.use(

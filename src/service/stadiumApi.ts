@@ -1,16 +1,21 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-import type { CreateStadiumProps } from '@custype/stadiumTypes';
+import type {
+  CreateStadiumProps,
+  StadiumListProps,
+} from '@custype/stadiumTypes';
+import { checkUserToken } from '@utils/user';
 
 import { apiUrl } from './config';
 
 const stadiumAxios = axios.create({ baseURL: `${apiUrl}/stadiums` });
 stadiumAxios.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.headers = {
-    // localStorage.getItem('token') ?? ''
-    // => localstorage.getItem('token')!==(null || undefined) ? localstorage.getItem('token') : ''
-    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
-  };
+  if (checkUserToken()) {
+    config.headers = {
+      Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+    };
+    return config;
+  }
   return config;
 });
 stadiumAxios.interceptors.response.use(
@@ -38,4 +43,15 @@ export const getAllStadiumApi = () => {
 
 export const deleteStadiumApi = (stadiumId: number) => {
   return stadiumAxios.delete(`${stadiumId}`);
+};
+
+export const updateStadiumApi = (
+  stadiumId: number,
+  stadiumInfo: CreateStadiumProps,
+) => {
+  const temp = JSON.parse(JSON.stringify(stadiumInfo));
+  delete temp.id;
+  delete temp.likeCount;
+  temp.files = temp.files.map((_: any) => _.imageUrl);
+  return stadiumAxios.patch(`${stadiumId}`, temp);
 };

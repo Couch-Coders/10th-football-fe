@@ -51,6 +51,8 @@ const AdminMyPage = () => {
     matchInfo: CreateMatchInfo;
     matchId: number;
   } | null>();
+  const [stadiumInfoForUpdate, setStadiumInfoForUpdate] =
+    useState<StadiumListProps | null>();
 
   useEffect(() => {
     void getAllMatchList();
@@ -60,11 +62,14 @@ const AdminMyPage = () => {
   useEffect(() => {
     if (matchInfoForUpdate) {
       setIsMatchModalOpen(true);
+    } else if (stadiumInfoForUpdate) {
+      setIsStadiumModalOpen(true);
     }
-  }, [matchInfoForUpdate]);
+  }, [matchInfoForUpdate, stadiumInfoForUpdate]);
 
   useEffect(() => {
     if (!isMatchModalOpen) setMatchInfoForUpdate(null);
+    if (!isStadiumModalOpen) setStadiumInfoForUpdate(null);
   }, [isMatchModalOpen, isStadiumModalOpen]);
 
   const getAllMatchList = async (
@@ -103,7 +108,9 @@ const AdminMyPage = () => {
       SuccessToast('삭제 성공!');
     } catch (error) {
       if (error instanceof AxiosError) {
-        ErrorToast(error.message);
+        ErrorToast(
+          error.response ? error.response.data.message : error.message,
+        );
       } else {
         console.error(error);
         ErrorToast();
@@ -128,6 +135,12 @@ const AdminMyPage = () => {
     });
   };
 
+  const onClickStadiumUpdate = async (stadiumInfo: StadiumListProps) => {
+    setStadiumInfoForUpdate({
+      ...stadiumInfo,
+    });
+  };
+
   return (
     <>
       <MatchCreateModal
@@ -142,6 +155,7 @@ const AdminMyPage = () => {
         onOk={() => setIsStadiumModalOpen(true)}
         onCancel={() => setIsStadiumModalOpen(false)}
         header="경기장 생성"
+        stadiumInfoForUpdate={stadiumInfoForUpdate}
       />
       <Container>
         <Button onClick={() => setIsStadiumModalOpen(true)} color={'yellow'}>
@@ -172,9 +186,7 @@ const AdminMyPage = () => {
               <div style={{ width: '10%' }}>{item.id}</div>
               <div style={{ width: '40%' }}>{item.address}</div>
               <div style={{ width: '20%' }}>{item.name}</div>
-              <Button onClick={() => alert('서비스 준비중입니다.')}>
-                수정
-              </Button>
+              <Button onClick={(_) => onClickStadiumUpdate(item)}>수정</Button>
               <Button onClick={() => deleteStadium(item.id)} danger>
                 삭제
               </Button>

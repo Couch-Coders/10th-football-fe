@@ -1,12 +1,17 @@
 import axios from 'axios';
 
+import { checkUserToken } from '@utils/user';
+
 import { apiUrl } from './config';
 
 const likeAxios = axios.create({ baseURL: `${apiUrl}/likes` });
 likeAxios.interceptors.request.use((config) => {
-  config.headers = {
-    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
-  };
+  if (checkUserToken()) {
+    config.headers = {
+      Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+    };
+    return config;
+  }
   return config;
 });
 likeAxios.interceptors.response.use(
