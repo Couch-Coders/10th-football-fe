@@ -108,7 +108,9 @@ const AdminMyPage = () => {
       SuccessToast('삭제 성공!');
     } catch (error) {
       if (error instanceof AxiosError) {
-        ErrorToast(error.message);
+        ErrorToast(
+          error.response ? error.response.data.message : error.message,
+        );
       } else {
         console.error(error);
         ErrorToast();

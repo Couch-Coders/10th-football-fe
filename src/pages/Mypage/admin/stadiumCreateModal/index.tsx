@@ -33,7 +33,6 @@ const StadiumCreateModal = ({
     address: '',
     files: [],
   });
-  console.log(stadiumInfoForUpdate);
   const [imgFormData, setImgFormData] = useState<FormData | null>(null);
 
   useEffect(() => {
