@@ -45,6 +45,26 @@ firebase deploy
 
 `firebase init`을 통해 `firebase.json`파일을 생성한 후 `firebase-deploy`을 통해 배포합니다.
 
+### 주요 기능
+
+google oAuth을 통한 로그인/회원가입 이 가능합니다.
+
+관리자는 마이페이지에서 사용자가 신청할 수 있는 매치와 경기장을 등록할 수 있습니다.
+
+사용자는 메인 페이지에서 매치 정보를 조회하고 원하는 매치를 신청할 수 있습니다.
+
+### 주요 개발
+
+google oAuth와 firebase을 이용해 로그인/회원가입 구현
+
+`Redux-toolkit`과 `Context API`을 통해 상태 관리
+
+`typescript`을 통해 타입 지정 및 런타임 에러 방지
+
+`eslint`와 `prettier`을 통해 코드 문법, 스타일 통일
+
+`axios`을 통해 서버와 데이터 통신
+
 ### :video_camera:
 
 ### :whale: Blog
