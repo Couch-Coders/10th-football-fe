@@ -31,7 +31,7 @@ yarn install
 yarn start
 ```
 
-#### 배포하기
+### 배포하기
 
 ```
 yarn global add firebase-tools
@@ -50,4 +50,5 @@ firebase deploy
 ### :whale: Blog
 
 [블로그](https://velog.io/@soll/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A4%80%EB%B9%84)
+
 [Backend github repo](https://github.com/Couch-Coders/10th-football-be)
