@@ -7,10 +7,21 @@ import styled from 'styled-components';
 interface CheckboxGroupProps {
   options: Array<{ label: string; value: string | number }>;
   onChange: (d: CheckboxValueType[]) => void;
+  className?: string;
 }
 
-const CheckboxGroup = ({ options, onChange }: CheckboxGroupProps) => {
-  return <Checkbox.Group options={options} onChange={onChange} />;
+const CheckboxGroup = ({
+  options,
+  onChange,
+  className,
+}: CheckboxGroupProps) => {
+  return (
+    <Checkbox.Group
+      options={options}
+      onChange={onChange}
+      className={className}
+    />
+  );
 };
 
 export default CheckboxGroup;
