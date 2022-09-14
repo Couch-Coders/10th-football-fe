@@ -67,8 +67,12 @@ google oAuth와 firebase을 이용해 로그인/회원가입 구현
 
 ### :video_camera:
 
-### :whale: Blog
+### :whale:
 
-[블로그](https://velog.io/@soll/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A4%80%EB%B9%84)
+[기능명세서](https://www.notion.so/70d6139f94bd411397d275fc8d1648fc)
+
+[UI 기획 Figma](https://www.figma.com/file/KDqU3tdX6ASRIYdVr3cthD/Football?node-id=7%3A29)
 
 [Backend github repo](https://github.com/Couch-Coders/10th-football-be)
+
+[블로그](https://velog.io/@soll/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A4%80%EB%B9%84)
