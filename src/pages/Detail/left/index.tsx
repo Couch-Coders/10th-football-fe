@@ -117,7 +117,7 @@ const LeftSideDetail = () => {
           )}
         </MatchRequestCard>
       </Card>
-      {checkUserToken() && user.profile.role === 'ADMIN' && (
+      {checkUserToken() && user.profile.role === 'ROLE_ADMIN' && (
         <Card>
           <ApplicantsContainer>
             {matchInfo.matchApplicants.map((applicant, index) => {

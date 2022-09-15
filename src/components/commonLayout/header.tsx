@@ -45,7 +45,7 @@ const AbsoluteHeader = styled.div`
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSignupOpen, setSignupOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [signupInfo, setSignupInfo] = useState<UserInfo>({
     gender: '',
     phone: '',
@@ -73,7 +73,7 @@ const Header = () => {
       await dispatch(getUserInfoByToken(token)).unwrap();
     } catch (error: any) {
       if (error.message === 'NEW_USER') {
-        setSignupOpen(true);
+        setIsSignupOpen(true);
       } else {
         console.error(error);
       }
@@ -82,7 +82,7 @@ const Header = () => {
 
   const signUp = async () => {
     await dispatch(createUserBySelf(signupInfo)).unwrap();
-    setSignupOpen(false);
+    setIsSignupOpen(false);
   };
 
   const signOut = async () => {
@@ -96,8 +96,8 @@ const Header = () => {
     <>
       <Modal
         visible={isSignupOpen}
-        onOk={() => setIsOpen(true)}
-        onCancel={() => setIsOpen(false)}
+        onOk={() => setIsSignupOpen(true)}
+        onCancel={() => setIsSignupOpen(false)}
         header={'Sign up'}
         height="auto"
       >

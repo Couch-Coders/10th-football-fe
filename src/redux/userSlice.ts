@@ -87,10 +87,10 @@ const userSlice = createSlice({
       console.log('error while operating getUserInfoByToken: ', action);
       if (checkUserToken()) localStorage.removeItem('token');
     });
-    builder.addCase(
-      createUserBySelf.fulfilled,
-      (state, action) => action.payload,
-    );
+    builder.addCase(createUserBySelf.fulfilled, (state, action) => {
+      state.profile = action.payload;
+      state.isAuthenticaton = true;
+    });
     builder.addCase(createUserBySelf.rejected, (state, action) => {
       console.error('error while operating createUserBySelf:');
       localStorage.removeItem('token');

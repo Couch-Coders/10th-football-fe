@@ -44,16 +44,19 @@ const MatchList = ({
     <List
       size="large"
       {...rest}
+      pagination={{
+        onChange: (page) => {
+          console.log(page);
+        },
+        pageSize: 8,
+      }}
       renderItem={(item: MatchListData) => (
         <List.Item
           id={item.id.toString()}
           onClick={onClick}
           style={{ cursor: 'pointer', fontSize: '1rem' }}
         >
-          <span
-            onClick={(e) => console.log(e)}
-            style={{ fontWeight: 'bold', width: '10%' }}
-          >
+          <span style={{ fontWeight: 'bold', width: '10%' }}>
             {item.startAt.split('T')[1].slice(0, 5)}
           </span>
           <span style={{ fontSize: '1.5rem', width: '50%' }}>{`${
