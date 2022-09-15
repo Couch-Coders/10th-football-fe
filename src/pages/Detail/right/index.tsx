@@ -153,7 +153,13 @@ const RightSideDetail = () => {
       </section>
       <section>
         <Card title="주의사항" borderRadius>
+          <p style={{ fontWeight: 'bold' }}>매치 주의사항</p>
+          <br />
           {matchInfo.content}
+          <div></div>
+          <br />
+          <p style={{ fontWeight: 'bold' }}>경기장 주의사항</p>
+          {matchInfo.stadium.content}
         </Card>
       </section>
       <section className="map-container">

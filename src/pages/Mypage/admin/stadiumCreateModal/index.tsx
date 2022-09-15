@@ -90,6 +90,7 @@ const StadiumCreateModal = ({
       ErrorToast('작성하지 않으신 부분이 있습니다. 확인 후 다시 시도해주세요.');
       return;
     }
+
     try {
       if (type === 'update') {
         await updateStadiumApi(stadiumInfoForUpdate?.id ?? 0, stadiumInfo);
@@ -145,9 +146,10 @@ const StadiumCreateModal = ({
                 const checkObj = CHECK_VALUES.map((value) =>
                   d.includes(value) ? { [value]: true } : { [value]: false },
                 );
+                const temp = Object.assign({}, ...checkObj);
                 setStadiumInfo({
                   ...stadiumInfo,
-                  ...checkObj,
+                  ...temp,
                 });
               }}
             />

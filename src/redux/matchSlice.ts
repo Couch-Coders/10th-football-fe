@@ -11,6 +11,7 @@ interface MatchInfoProps {
     parking: boolean;
     rental: boolean;
     files: Array<{ id: number; imageUrl: string }>;
+    [key: string]: any;
   };
   matchApplicants: Array<{
     [key: string]: any;
