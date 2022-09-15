@@ -177,7 +177,7 @@ const Header = () => {
           <div>
             <div onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
               <span>
-                <TeamOutlined style={{ fontSize: '1.5rem' }} /> 풋볼
+                <TeamOutlined style={{ fontSize: '1.5rem' }} /> 풋워크
               </span>
             </div>
             <div>
