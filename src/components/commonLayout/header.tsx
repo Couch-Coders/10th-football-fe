@@ -1,5 +1,6 @@
 import { TeamOutlined } from '@ant-design/icons';
 import { Avatar, Input, Select } from 'antd';
+import { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,7 +10,7 @@ import GButton from '@assets/images/GButton.jpg';
 import Button from '@components/button';
 import InputForm, { Section } from '@components/inputForm';
 import Modal from '@components/modal';
-import { SuccessToast } from '@components/toasts';
+import { ErrorToast, SuccessToast } from '@components/toasts';
 import {
   getUserInfoByToken,
   createUserBySelf,
@@ -81,8 +82,25 @@ const Header = () => {
   };
 
   const signUp = async () => {
-    await dispatch(createUserBySelf(signupInfo)).unwrap();
-    setIsSignupOpen(false);
+    const { gender, phone } = signupInfo;
+    if (!gender) {
+      ErrorToast('성별을 입력해주세요!');
+      return;
+    }
+    if (!phone) {
+      ErrorToast('전화번호를 입력해주세요!');
+      return;
+    }
+    try {
+      await dispatch(createUserBySelf(signupInfo)).unwrap();
+      setIsSignupOpen(false);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log('1: ', error);
+      } else {
+        console.log(error);
+      }
+    }
   };
 
   const signOut = async () => {
@@ -106,6 +124,7 @@ const Header = () => {
             <Input
               type="text"
               value={signupInfo.phone}
+              placeholder={'000-0000-0000'}
               onChange={(e) => {
                 setSignupInfo({
                   ...signupInfo,
