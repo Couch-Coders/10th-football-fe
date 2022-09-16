@@ -30,6 +30,7 @@ interface MatchInfoProps {
   }>;
   likeStatus?: boolean;
   applyStatus?: boolean;
+  [key: string]: any;
 }
 
 const initialState: MatchInfoProps = {

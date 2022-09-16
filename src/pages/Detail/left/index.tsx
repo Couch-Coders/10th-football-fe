@@ -109,7 +109,10 @@ const LeftSideDetail = () => {
               신청취소
             </Button>
           ) : (
-            <Button onClick={applyMatch} disabled={matchInfo.rest === 0}>
+            <Button
+              onClick={applyMatch}
+              disabled={matchInfo.rest === 0 || matchInfo.status === 'CLOSE'}
+            >
               신청하기
               <br />
               <span>마감까지 {matchInfo.rest}자리 남았어요!</span>
