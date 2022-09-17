@@ -8,6 +8,8 @@
 
 개발 기간: 2022-08-09 ~ 2022-09-14
 
+### [페이지 바로가기](https://football-3b39f.web.app/)
+
 <hr/>
 
 ### :raising_hand: 팀원
